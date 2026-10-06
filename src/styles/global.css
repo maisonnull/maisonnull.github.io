@@ -1,0 +1,83 @@
+:root{
+  --wall:#3B1D22;
+  --wall-deep:#2A1418;
+  --ivory:#EFE9DC;
+  --ivory-soft:#CDBDB2;
+  --paper:#F2F1EC;
+  --ink:#221D1E;
+  --ink-soft:#5E5557;
+  --line:#D9D4CB;
+  --brass:#B8955A;
+  --mat:#FBFAF7;
+  --serif:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --sans:"Hanken Grotesk", "Helvetica Neue", Arial, sans-serif;
+  --mono:"JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+  --measure:62ch;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.65 var(--sans);-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-underline-offset:.22em;text-decoration-thickness:1px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--brass);outline-offset:4px}
+.wrap{max-width:1180px;margin:0 auto;padding:0 clamp(1.25rem,4vw,3rem)}
+.skip{position:absolute;left:-999px}
+.skip:focus{left:1rem;top:1rem;background:var(--ivory);color:var(--wall);padding:.5rem 1rem;z-index:10}
+
+/* Wordmark: couture serif meets code */
+.wordmark{font-family:var(--serif);font-weight:500;font-size:1.45rem;letter-spacing:.01em;text-decoration:none;white-space:nowrap}
+.wordmark code{font-family:var(--mono);font-size:.74em;font-weight:400;letter-spacing:0;margin-left:.22em}
+
+/* Header and footer */
+.site-head{background:var(--wall);color:var(--ivory)}
+.site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem 1.5rem;padding-top:1.4rem;padding-bottom:1.4rem;flex-wrap:wrap}
+.nav{display:flex;gap:.4rem clamp(1rem,2.5vw,2rem);flex-wrap:wrap}
+.nav a{text-decoration:none;font-size:.98rem;color:var(--ivory-soft)}
+.nav a:hover,.nav a[aria-current="page"]{color:var(--ivory);text-decoration:underline}
+.site-foot{background:var(--wall-deep);color:var(--ivory-soft);padding:3.5rem 0 3rem;font-size:.95rem}
+.site-foot .wrap{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end}
+.site-foot .wordmark{color:var(--ivory)}
+.site-foot p{margin:.6rem 0 0}
+
+/* Shared type */
+.wall{background:var(--wall);color:var(--ivory)}
+h1,h2,h3{font-family:var(--serif);font-weight:500;letter-spacing:-.01em;margin:0}
+h1{font-size:clamp(2.7rem,6.4vw,5.4rem);line-height:1.02}
+h2{font-size:clamp(2rem,4vw,3.1rem);line-height:1.08}
+h3{font-size:1.6rem;line-height:1.2}
+.lede{font-size:1.2rem;max-width:46ch;color:var(--ivory-soft);margin:1.6rem 0 0}
+.btns{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2.2rem}
+.btn{display:inline-block;padding:.85rem 1.4rem;font-weight:600;font-size:.98rem;text-decoration:none;border:1px solid currentColor;border-radius:2px}
+.btn:hover{text-decoration:underline}
+.wall .btn.primary{background:var(--ivory);color:var(--wall);border-color:var(--ivory)}
+.btn.ink{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+/* Inner page banner */
+.banner{padding:clamp(3.5rem,9vw,6.5rem) 0 clamp(3rem,7vw,5rem)}
+.back{display:inline-block;margin-bottom:1.6rem;color:var(--ivory-soft);font-size:.95rem}
+
+.section{padding:clamp(3.5rem,8vw,6rem) 0}
+.section + .section{border-top:1px solid var(--line)}
+.section-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;flex-wrap:wrap;margin-bottom:2.5rem}
+.section-head a{color:var(--ink-soft)}
+
+/* Museum placard data */
+.placard-data{display:grid;grid-template-columns:max-content 1fr;gap:.35rem 1.4rem;margin:0;font-size:.95rem}
+.placard-data dt{color:var(--ink-soft)}
+.placard-data dd{margin:0}
+.wall .placard-data dt{color:var(--ivory-soft)}
+
+/* Long-form writing */
+.prose{max-width:var(--measure);font-size:1.1rem}
+.prose h2{font-size:clamp(1.7rem,3vw,2.2rem);margin:3rem 0 1rem}
+.prose h2:first-child{margin-top:0}
+.prose p,.prose ul,.prose ol{margin:0 0 1.2rem}
+.prose li{margin-bottom:.4rem}
+.prose blockquote{margin:2rem 0;padding-left:1.4rem;border-left:2px solid var(--brass);font-family:var(--serif);font-size:1.45rem;line-height:1.35}
+.prose blockquote p{margin:0}
+
+@media (max-width:720px){
+  .site-foot .wrap{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

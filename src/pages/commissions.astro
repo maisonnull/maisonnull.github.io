@@ -1,0 +1,86 @@
+---
+import Base from '../layouts/Base.astro';
+import { commissions, addOns } from '../commissions';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const steps = [
+  { name: 'Enquire', text: 'Tell me what you need and when. I reply within two working days.' },
+  { name: 'Scope', text: 'We agree what is being built, the price and the dates, in writing, before any work starts.' },
+  { name: 'Build', text: 'You get a private preview link to check progress as the piece takes shape.' },
+  { name: 'Launch', text: 'It goes live on your domain and your accounts. You own everything, including the code.' },
+];
+---
+<Base title="Commissions" current="commissions" description="Websites and apps made to order by Maison Null, with prices.">
+  <section class="wall banner">
+    <div class="wrap">
+      <h1>Commissions</h1>
+      <p class="lede">Websites and apps made to order. Prices are starting points in Singapore dollars, and every commission is quoted in writing before work begins.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <ul class="board">
+        {commissions.map((c) => (
+          <li class="item">
+            <div class="item-head">
+              <h2>{c.name}</h2>
+              <span class="dots" aria-hidden="true"></span>
+              <span class="price">{c.price}</span>
+            </div>
+            <p class="sum">{c.summary}</p>
+            <ul class="incl">{c.includes.map((i) => <li>{i}</li>)}</ul>
+            <p class="time">{c.time}</p>
+          </li>
+        ))}
+      </ul>
+
+      <h2 class="sub">On the side</h2>
+      <ul class="board small">
+        {addOns.map((a) => (
+          <li class="item">
+            <div class="item-head">
+              <h3>{a.name}</h3>
+              <span class="dots" aria-hidden="true"></span>
+              <span class="price">{a.price}</span>
+            </div>
+            <p class="sum">{a.summary}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2>How a commission works</h2>
+      <ol class="steps">
+        {steps.map((s) => (
+          <li><h3>{s.name}</h3><p>{s.text}</p></li>
+        ))}
+      </ol>
+      <div class="btns"><a class="btn ink" href={`${base}/contact/`}>Start a commission</a></div>
+    </div>
+  </section>
+</Base>
+<style>
+  .board{list-style:none;margin:0;padding:0;max-width:56rem}
+  .item{padding:2rem 0;border-bottom:1px solid var(--line)}
+  .item:first-child{border-top:1px solid var(--ink)}
+  .item-head{display:grid;grid-template-columns:auto 1fr auto;gap:.9rem;align-items:baseline}
+  .item-head h2{font-size:clamp(1.9rem,3.6vw,2.6rem)}
+  .dots{border-bottom:1px dotted var(--ink-soft);transform:translateY(-.35em)}
+  .price{font-weight:600;font-size:1.1rem;white-space:nowrap}
+  .sum{margin:.6rem 0 0;font-size:1.1rem;max-width:52ch}
+  .incl{margin:.9rem 0 0;padding-left:1.1rem;color:var(--ink-soft);columns:2;column-gap:2.5rem}
+  .incl li{break-inside:avoid;margin-bottom:.3rem}
+  .time{margin:.9rem 0 0;font-size:.95rem;color:var(--ink-soft);font-style:italic}
+  .sub{font-size:clamp(1.6rem,3vw,2.1rem);margin:4rem 0 1.2rem}
+  .small .item-head h3{font-size:1.5rem}
+  .steps{list-style:none;counter-reset:s;margin:2.2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2rem}
+  .steps li{counter-increment:s;border-top:1px solid var(--ink);padding-top:1rem}
+  .steps li::before{content:counter(s);font-family:var(--serif);font-size:2.4rem;line-height:1;display:block;margin-bottom:.6rem}
+  .steps h3{font-size:1.3rem;margin-bottom:.4rem}
+  .steps p{margin:0;color:var(--ink-soft)}
+  @media (max-width:860px){.steps{grid-template-columns:1fr 1fr}.incl{columns:1}}
+  @media (max-width:520px){.steps{grid-template-columns:1fr}.item-head{grid-template-columns:1fr}.dots{display:none}}
+</style>

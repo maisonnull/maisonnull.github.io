@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import { studio } from '../config';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base title="Studio" current="studio" description="About Maison Null, a studio for well-made software.">
+  <section class="wall banner">
+    <div class="wrap">
+      <h1>Studio</h1>
+      <p class="lede">Maison Null is a one-person studio for now, run by {studio.founder} in Singapore. It makes products of its own and takes on a small number of commissions.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap cols">
+      <div class="prose">
+        <h2>The name</h2>
+        <p>A maison is a house where things are made by hand. Null is the value a program holds before anything has been put there. Every piece here starts as that empty value, and the job of the house is to fill it with something worth keeping.</p>
+        <h2>Who I picture</h2>
+        <p>For three years in school, I helped run a yearly day out for residents of two homes for the aged. When I decide what goes on a screen, they are who I picture: people who were never the target user. If something works for them, it usually works for everyone else too.</p>
+      </div>
+      <div>
+        <h2 class="h-rules">How the house works</h2>
+        <ul class="rules">
+          <li>Put AI where judgement is needed, and keep it out where correctness is needed.</li>
+          <li>Build things that degrade instead of breaking: a second provider, a fallback, offline data underneath.</li>
+          <li>Say plainly what is real and what is not. No invented numbers, no hidden fakery.</li>
+          <li>You own what you commission: the domain, the accounts and the code.</li>
+        </ul>
+        <div class="btns"><a class="btn ink" href={`${base}/contact/`}>Start a commission</a></div>
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .cols{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:clamp(2.5rem,6vw,5rem)}
+  .h-rules{font-size:clamp(1.7rem,3vw,2.2rem);margin-bottom:1.2rem}
+  .rules{list-style:none;margin:0;padding:0}
+  .rules li{padding:1rem 0;border-bottom:1px solid var(--line);font-size:1.05rem}
+  .rules li:first-child{border-top:1px solid var(--ink)}
+  @media (max-width:860px){.cols{grid-template-columns:1fr}}
+</style>

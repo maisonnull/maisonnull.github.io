@@ -1,0 +1,41 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const work = await getCollection('work');
+  return work.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const d = entry.data;
+---
+<Base title={d.title} current="work" description={d.summary}>
+  <section class="wall banner">
+    <div class="wrap head">
+      <div>
+        <a class="back" href={`${base}/work/`}>All work</a>
+        <h1>{d.title}</h1>
+        <p class="lede">{d.summary}</p>
+      </div>
+      <dl class="placard-data card">
+        <dt>Year</dt><dd>{d.year}</dd>
+        <dt>Medium</dt><dd>{d.medium}</dd>
+        <dt>Provenance</dt><dd>{d.provenance}</dd>
+      </dl>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <article class="prose"><Content /></article>
+      {d.link && <div class="btns"><a class="btn ink" href={d.link}>{d.linkLabel ?? 'Visit'}</a></div>}
+    </div>
+  </section>
+</Base>
+<style>
+  .head{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:2.5rem;align-items:end}
+  .card{background:#fff;color:var(--ink);padding:1.2rem 1.3rem;box-shadow:0 12px 26px -16px rgba(0,0,0,.6);max-width:24rem}
+  .wall .card dt{color:var(--ink-soft)}
+  @media (max-width:860px){.head{grid-template-columns:1fr}}
+</style>

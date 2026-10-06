@@ -1,0 +1,59 @@
+---
+interface Props {
+  title: string;
+  year: string;
+  medium: string;
+  note: string;
+  canvasText?: string;
+}
+const { title, year, medium, note, canvasText = '' } = Astro.props;
+---
+<figure class="exhibit">
+  <div class="light" aria-hidden="true"></div>
+  <div class="frame" aria-hidden="true">
+    <div class="mat">
+      <div class="canvas">
+        {canvasText && <span class="canvas-text">{canvasText}</span>}<span class="caret"></span>
+      </div>
+    </div>
+  </div>
+  <figcaption class="placard">
+    <p class="p-title"><em>{title}</em>, {year}</p>
+    <p class="p-medium">{medium}</p>
+    <p class="p-note">{note}</p>
+  </figcaption>
+</figure>
+
+<style>
+  .exhibit{position:relative;margin:0;display:grid;grid-template-columns:auto 13.5rem;gap:1.6rem;align-items:end;justify-content:center}
+  .light{
+    position:absolute;inset:-18% -10% -6% -10%;pointer-events:none;
+    background:radial-gradient(ellipse 46% 52% at 38% 44%, rgba(255,236,205,.16), rgba(255,236,205,0) 70%);
+    animation:lightup 1.8s ease-out .2s both;
+  }
+  .frame{
+    position:relative;width:clamp(15rem,26vw,20rem);aspect-ratio:4/5;
+    padding:10px;background:#1C0E11;
+    box-shadow:0 0 0 1px var(--brass), 0 28px 50px -18px rgba(0,0,0,.6);
+  }
+  .mat{height:100%;padding:13%;background:var(--mat);box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+  .canvas{height:100%;background:#FFFFFF;box-shadow:inset 0 1px 3px rgba(0,0,0,.12);display:flex;align-items:center;justify-content:center;font-family:var(--mono);color:var(--ink);font-size:1.05rem}
+  .caret{display:inline-block;width:2px;height:1.35em;background:var(--ink);margin-left:2px;animation:blink 1.1s steps(1,end) infinite}
+  .placard{
+    position:relative;background:#FFFFFF;color:var(--ink);padding:1rem 1.1rem;font-size:.82rem;line-height:1.45;
+    box-shadow:0 10px 24px -14px rgba(0,0,0,.6);margin-bottom:.4rem;
+  }
+  .placard p{margin:0}
+  .p-title{font-family:var(--serif);font-size:1.02rem;margin-bottom:.15rem !important}
+  .p-medium{color:var(--ink-soft);margin-bottom:.6rem !important}
+  @keyframes blink{50%{opacity:0}}
+  @keyframes lightup{from{opacity:0}to{opacity:1}}
+  @media (max-width:900px){
+    .exhibit{grid-template-columns:1fr;justify-items:start}
+    .frame{width:min(17rem,80vw)}
+    .placard{max-width:17rem}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .caret,.light{animation:none}
+  }
+</style>

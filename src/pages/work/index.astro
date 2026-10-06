@@ -1,0 +1,47 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base title="Work" current="work" description="Products and commissions by Maison Null.">
+  <section class="wall banner">
+    <div class="wrap">
+      <h1>Work</h1>
+      <p class="lede">Products made in the house, and pieces made for competitions and clients. Each one has a short account of the decision that shaped it.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      <table class="catalogue">
+        <thead>
+          <tr><th scope="col">Year</th><th scope="col">Piece</th><th scope="col">Medium</th><th scope="col">Provenance</th></tr>
+        </thead>
+        <tbody>
+          {work.map((p) => (
+            <tr>
+              <td data-label="Year">{p.data.year}</td>
+              <td class="t-title"><a href={`${base}/work/${p.id}/`}>{p.data.title}</a></td>
+              <td data-label="Medium">{p.data.medium}</td>
+              <td data-label="Provenance">{p.data.provenance}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</Base>
+<style>
+  .catalogue{width:100%;border-collapse:collapse;font-size:1rem}
+  .catalogue th{text-align:left;font-weight:500;color:var(--ink-soft);padding:0 1rem .8rem 0;border-bottom:1px solid var(--ink)}
+  .catalogue td{padding:1.4rem 1rem 1.4rem 0;border-bottom:1px solid var(--line);vertical-align:baseline}
+  .t-title a{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);text-decoration:none}
+  .t-title a:hover{text-decoration:underline;text-decoration-thickness:1px}
+  @media (max-width:760px){
+    .catalogue thead{position:absolute;left:-999px}
+    .catalogue tr{display:grid;padding:1.4rem 0;border-bottom:1px solid var(--line)}
+    .catalogue td{border:0;padding:.1rem 0}
+    .catalogue td.t-title{order:-1;margin-bottom:.5rem}
+    .catalogue td[data-label]::before{content:attr(data-label) ": ";color:var(--ink-soft)}
+  }
+</style>

@@ -1,0 +1,99 @@
+---
+import Base from '../layouts/Base.astro';
+import Exhibit from '../components/Exhibit.astro';
+import { getCollection } from 'astro:content';
+import { commissions } from '../commissions';
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+---
+<Base>
+  <section class="wall hero">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <h1>A house for well-made software.</h1>
+        <p class="lede">Maison Null designs and builds websites, apps and products of its own. Every piece starts as an empty screen, and nothing leaves the house until it works for the person using it.</p>
+        <div class="btns">
+          <a class="btn primary" href={`${base}/work/`}>See the work</a>
+          <a class="btn" href={`${base}/contact/`}>Start a commission</a>
+        </div>
+      </div>
+      <Exhibit
+        title="Untitled (null)"
+        year="2026"
+        medium="An empty screen, waiting"
+        note="Every piece in this house began like this. The next one could be yours."
+      />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Selected work</h2>
+        <a href={`${base}/work/`}>All work</a>
+      </div>
+      <ol class="pieces">
+        {work.map((p) => (
+          <li class="piece">
+            <a class="piece-title" href={`${base}/work/${p.id}/`}><h3>{p.data.title}</h3></a>
+            <div class="piece-body">
+              <p>{p.data.summary}</p>
+              <dl class="placard-data">
+                <dt>Year</dt><dd>{p.data.year}</dd>
+                <dt>Medium</dt><dd>{p.data.medium}</dd>
+                <dt>Provenance</dt><dd>{p.data.provenance}</dd>
+              </dl>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Commissions</h2>
+        <a href={`${base}/commissions/`}>Prices and process</a>
+      </div>
+      <ul class="menu">
+        {commissions.map((c) => (
+          <li>
+            <span class="m-name">{c.name}</span>
+            <span class="m-dots" aria-hidden="true"></span>
+            <span class="m-price">{c.price}</span>
+            <span class="m-sum">{c.summary}</span>
+          </li>
+        ))}
+      </ul>
+      <div class="btns"><a class="btn ink" href={`${base}/contact/`}>Start a commission</a></div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero{padding:clamp(3.5rem,9vw,7rem) 0 clamp(4rem,10vw,7.5rem);overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:clamp(2.5rem,6vw,5rem);align-items:center}
+  .hero h1{max-width:10ch}
+
+  .pieces{list-style:none;margin:0;padding:0}
+  .piece{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr);gap:1.2rem clamp(2rem,5vw,4.5rem);padding:2.2rem 0;border-top:1px solid var(--line)}
+  .piece:last-child{border-bottom:1px solid var(--line)}
+  .piece-title{text-decoration:none}
+  .piece-title h3{font-size:clamp(2.2rem,4.5vw,3.4rem);line-height:1}
+  .piece-title:hover h3{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.15em}
+  .piece-body p{margin:0 0 1.2rem;max-width:52ch;font-size:1.1rem}
+
+  .menu{list-style:none;margin:0;padding:0;max-width:52rem}
+  .menu li{display:grid;grid-template-columns:auto 1fr auto;column-gap:.8rem;align-items:baseline;padding:1.1rem 0;border-bottom:1px solid var(--line)}
+  .menu li:first-child{border-top:1px solid var(--line)}
+  .m-name{font-family:var(--serif);font-size:1.5rem}
+  .m-dots{border-bottom:1px dotted var(--ink-soft);transform:translateY(-.3em)}
+  .m-price{font-weight:600}
+  .m-sum{grid-column:1 / -1;color:var(--ink-soft);margin-top:.2rem}
+
+  @media (max-width:900px){
+    .hero-grid,.piece{grid-template-columns:1fr}
+  }
+</style>

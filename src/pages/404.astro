@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Exhibit from '../components/Exhibit.astro';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base title="Not found">
+  <section class="wall nf">
+    <div class="wrap nf-grid">
+      <div>
+        <h1>This page returned null.</h1>
+        <p class="lede">There's nothing hanging at this address. It may have moved, or the link may be mistyped.</p>
+        <div class="btns"><a class="btn primary" href={`${base}/`}>Go to the home page</a></div>
+      </div>
+      <Exhibit title="Untitled (404)" year="2026" medium="A missing page" note="Nothing was ever hung here." canvasText="null" />
+    </div>
+  </section>
+</Base>
+<style>
+  .nf{padding:clamp(3.5rem,9vw,7rem) 0;overflow:hidden}
+  .nf-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:3rem;align-items:center}
+  .nf h1{max-width:11ch}
+  @media (max-width:900px){.nf-grid{grid-template-columns:1fr}}
+</style>

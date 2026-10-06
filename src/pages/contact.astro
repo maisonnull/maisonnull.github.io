@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { studio } from '../config';
+const { tallyFormId, email } = studio;
+---
+<Base title="Contact" current="contact" description="Start a commission with Maison Null.">
+  <section class="wall banner">
+    <div class="wrap">
+      <h1>Start a commission</h1>
+      <p class="lede">Tell me what you want to make, roughly when you need it, and what budget you have in mind. I reply within two working days.</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="wrap">
+      {tallyFormId ? (
+        <iframe
+          class="form"
+          src={`https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&transparentBackground=1`}
+          title="Commission enquiry form"
+          loading="lazy"
+        ></iframe>
+      ) : email ? (
+        <p class="big">Email <a href={`mailto:${email}`}>{email}</a></p>
+      ) : (
+        <p class="big">The enquiry form opens soon.</p>
+      )}
+      {tallyFormId && email && <p class="alt">Or email <a href={`mailto:${email}`}>{email}</a>.</p>}
+    </div>
+  </section>
+</Base>
+<style>
+  .form{width:100%;max-width:44rem;min-height:640px;border:0;display:block}
+  .big{font-family:var(--serif);font-size:clamp(1.6rem,3.2vw,2.4rem);margin:0}
+  .alt{color:var(--ink-soft);margin-top:1.5rem}
+</style>
