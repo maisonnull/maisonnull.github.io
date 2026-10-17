@@ -1,9 +1,9 @@
-// Studio settings. Fill these in before you launch.
+// Studio settings.
 export const studio = {
   name: 'Maison Null',
   founder: 'Nathan',
-  // Paste the ID from your Tally form link (tally.so/r/XXXXXX). Leave empty to hide the form.
+  // Paste the ID from your Tally form link: for tally.so/r/wA1bCd, the ID is wA1bCd.
+  // Leave empty and the contact page says "Enquiries open soon".
+  // To receive the brief typed into the home page frame, add a hidden field named "brief" to the form.
   tallyFormId: '',
-  // Your studio email, e.g. hello@maisonnull.com. Leave empty until you have one.
-  email: '',
 };

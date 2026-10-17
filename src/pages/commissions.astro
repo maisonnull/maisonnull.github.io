@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { commissions, addOns } from '../commissions';
+import { commissions, addOns, founding, included, faq } from '../commissions';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const steps = [
   { name: 'Enquire', text: 'Tell me what you need and when. I reply within two working days.' },
@@ -16,6 +16,19 @@ const steps = [
       <p class="lede">Websites and apps made to order. Prices are starting points in Singapore dollars, and every commission is quoted in writing before work begins.</p>
     </div>
   </section>
+
+  {founding.enabled && (
+    <section class="founding" id="founding">
+      <div class="wrap founding-inner">
+        <p class="f-tag">Founding commissions</p>
+        <div>
+          <h2>{founding.discount} for the first {founding.slots} clients.</h2>
+          <p>The house is new, so the first {founding.slots} commissions are discounted, {founding.terms}. Same scope, same care, lower price.</p>
+        </div>
+        <a class="btn ink" href={`${base}/contact/`}>Claim a founding spot</a>
+      </div>
+    </section>
+  )}
 
   <section class="section">
     <div class="wrap">
@@ -52,17 +65,67 @@ const steps = [
 
   <section class="section">
     <div class="wrap">
+      <h2>Every commission includes</h2>
+      <dl class="included">
+        {included.map((i) => (<div><dt>{i.name}</dt><dd>{i.text}</dd></div>))}
+      </dl>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
       <h2>How a commission works</h2>
       <ol class="steps">
         {steps.map((s) => (
           <li><h3>{s.name}</h3><p>{s.text}</p></li>
         ))}
       </ol>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap faq-wrap">
+      <h2>Questions</h2>
+      <div class="faq">
+        {faq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section closing">
+    <div class="wrap">
+      <h2>Have something in mind?</h2>
+      <p class="lede-ink">Describe it in a sentence. That is enough to start.</p>
       <div class="btns"><a class="btn ink" href={`${base}/contact/`}>Start a commission</a></div>
     </div>
   </section>
 </Base>
 <style>
+  .founding{background:#fff;border-bottom:1px solid var(--line)}
+  .founding-inner{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:1rem 2.5rem;align-items:center;padding-top:2.2rem;padding-bottom:2.2rem}
+  .f-tag{margin:0;font-family:var(--serif);font-style:italic;color:var(--brass);font-size:1.15rem;white-space:nowrap}
+  .founding h2{font-size:clamp(1.5rem,2.8vw,2rem);margin-bottom:.4rem}
+  .founding p{margin:0;max-width:60ch;color:var(--ink-soft)}
+  .founding .btn{white-space:nowrap}
+  .included{display:grid;grid-template-columns:repeat(auto-fill,minmax(15rem,1fr));gap:1.5rem 2.5rem;margin:2rem 0 0}
+  .included div{border-top:1px solid var(--ink);padding-top:.9rem}
+  .included dt{font-family:var(--serif);font-size:1.3rem;margin-bottom:.35rem}
+  .included dd{margin:0;color:var(--ink-soft)}
+  .faq-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:2rem 4rem}
+  .faq details{border-top:1px solid var(--line)}
+  .faq details:last-child{border-bottom:1px solid var(--line)}
+  .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:1rem;padding:1.1rem 0;font-family:var(--serif);font-size:1.3rem}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:'+';font-family:var(--sans);color:var(--ink-soft);transition:transform .2s}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq details p{margin:0 0 1.2rem;max-width:62ch;color:var(--ink-soft)}
+  .closing{text-align:left}
+  .lede-ink{font-size:1.2rem;color:var(--ink-soft);margin:1rem 0 0}
   .board{list-style:none;margin:0;padding:0;max-width:56rem}
   .item{padding:2rem 0;border-bottom:1px solid var(--line)}
   .item:first-child{border-top:1px solid var(--ink)}
@@ -81,6 +144,7 @@ const steps = [
   .steps li::before{content:counter(s);font-family:var(--serif);font-size:2.4rem;line-height:1;display:block;margin-bottom:.6rem}
   .steps h3{font-size:1.3rem;margin-bottom:.4rem}
   .steps p{margin:0;color:var(--ink-soft)}
+  @media (max-width:860px){.founding-inner,.faq-wrap{grid-template-columns:1fr}}
   @media (max-width:860px){.steps{grid-template-columns:1fr 1fr}.incl{columns:1}}
   @media (max-width:520px){.steps{grid-template-columns:1fr}.item-head{grid-template-columns:1fr}.dots{display:none}}
 </style>
