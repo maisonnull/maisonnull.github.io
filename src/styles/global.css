@@ -30,15 +30,19 @@ a:hover{text-decoration-thickness:2px}
 .wordmark code{font-family:var(--mono);font-size:.74em;font-weight:400;letter-spacing:0;margin-left:.22em}
 
 /* Header and footer */
-.site-head{background:var(--wall);color:var(--ivory)}
+.site-head{position:sticky;top:0;z-index:40;background:rgba(43,20,24,.94);color:var(--ivory);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2);border-bottom:1px solid rgba(239,233,220,.08)}
+.is-home .site-head{position:fixed;left:0;right:0;background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none;transition:background .3s,border-color .3s}
+.is-home .site-head.scrolled{background:rgba(20,10,12,.9);border-bottom-color:rgba(239,233,220,.08);-webkit-backdrop-filter:blur(14px) saturate(1.2);backdrop-filter:blur(14px) saturate(1.2)}
 .site-head .wrap{display:flex;align-items:center;justify-content:space-between;gap:1rem 1.5rem;padding-top:1.4rem;padding-bottom:1.4rem;flex-wrap:wrap}
 .nav{display:flex;gap:.4rem clamp(1rem,2.5vw,2rem);flex-wrap:wrap}
 .nav a{text-decoration:none;font-size:.98rem;color:var(--ivory-soft)}
 .nav a:hover,.nav a[aria-current="page"]{color:var(--ivory);text-decoration:underline}
-.site-foot{background:var(--wall-deep);color:var(--ivory-soft);padding:3.5rem 0 3rem;font-size:.95rem}
-.site-foot .wrap{display:grid;grid-template-columns:1fr auto;gap:2rem;align-items:end}
-.site-foot .wordmark{color:var(--ivory)}
-.site-foot p{margin:.6rem 0 0}
+.site-foot{background:#140A0C;color:var(--ivory-soft);padding:3.5rem 0 0;font-size:.95rem;overflow:hidden}
+.foot-row{display:flex;justify-content:space-between;align-items:center;gap:1rem 2rem;flex-wrap:wrap}
+.foot-row p{margin:0}
+.foot-mark{margin:3rem 0 0;padding:0 2vw 2.2vw;font-family:var(--serif);font-weight:400;color:var(--ivory);white-space:nowrap;text-align:center;
+  font-size:clamp(3.4rem,15.5vw,15rem);line-height:.9;letter-spacing:-.04em}
+.foot-mark code{font-family:var(--mono);font-size:.36em;letter-spacing:-.02em;margin-left:.15em;color:var(--brass);vertical-align:.1em}
 
 /* Shared type */
 .wall{background:var(--wall);color:var(--ivory)}
@@ -78,6 +82,6 @@ h3{font-size:1.6rem;line-height:1.2}
 .prose blockquote p{margin:0}
 
 @media (max-width:720px){
-  .site-foot .wrap{grid-template-columns:1fr}
+  .foot-row{flex-direction:column;align-items:flex-start}
 }
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}

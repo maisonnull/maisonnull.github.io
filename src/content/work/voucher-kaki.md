@@ -4,7 +4,9 @@ year: 2026
 medium: Python, React, Leaflet on OneMap
 provenance: Finalist, SimplifyNext IGNITE Agentic AI Hackathon 2026
 summary: Conversational search for the 11,301 eateries in Singapore that accept CDC vouchers, in four languages.
-order: 1
+order: 3
+result: Finalist
+decision: The best decision was a deletion.
 link: https://simplify-ai-hackathon.vercel.app
 linkLabel: Try Voucher Kaki
 ---

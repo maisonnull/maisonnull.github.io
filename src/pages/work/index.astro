@@ -1,6 +1,8 @@
 ---
 import Base from '../../layouts/Base.astro';
+import Phone from '../../components/Phone.astro';
 import { getCollection } from 'astro:content';
+import { plinth } from '../../data/plinths';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -8,40 +10,43 @@ const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.
   <section class="wall banner">
     <div class="wrap">
       <h1>Work</h1>
-      <p class="lede">Products made in the house, and pieces made for competitions and clients. Each one has a short account of the decision that shaped it.</p>
+      <p class="lede">Pieces made for competitions, clients and the house itself. Each one comes with the decision that shaped it.</p>
     </div>
   </section>
   <section class="section">
     <div class="wrap">
-      <table class="catalogue">
-        <thead>
-          <tr><th scope="col">Year</th><th scope="col">Piece</th><th scope="col">Medium</th><th scope="col">Provenance</th></tr>
-        </thead>
-        <tbody>
-          {work.map((p) => (
-            <tr>
-              <td data-label="Year">{p.data.year}</td>
-              <td class="t-title"><a href={`${base}/work/${p.id}/`}>{p.data.title}</a></td>
-              <td data-label="Medium">{p.data.medium}</td>
-              <td data-label="Provenance">{p.data.provenance}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <ul class="grid">
+        {work.map((p) => (
+          <li>
+            <a class="tile" href={`${base}/work/${p.id}/`}>
+              <span class="t-plinth" style={`--plinth:${plinth[p.id] ?? '#E7E2D8'}`}><Phone id={p.id} scale={0.62} /></span>
+              <span class="t-body">
+                <span class="t-res" data-res={p.data.result}>{p.data.result}</span>
+                <span class="t-title">{p.data.title}</span>
+                <span class="t-dec">{p.data.decision}</span>
+                <span class="t-meta">{p.data.year}, {p.data.provenance}</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
     </div>
   </section>
 </Base>
 <style>
-  .catalogue{width:100%;border-collapse:collapse;font-size:1rem}
-  .catalogue th{text-align:left;font-weight:500;color:var(--ink-soft);padding:0 1rem .8rem 0;border-bottom:1px solid var(--ink)}
-  .catalogue td{padding:1.4rem 1rem 1.4rem 0;border-bottom:1px solid var(--line);vertical-align:baseline}
-  .t-title a{font-family:var(--serif);font-size:clamp(1.6rem,3vw,2.2rem);text-decoration:none}
-  .t-title a:hover{text-decoration:underline;text-decoration-thickness:1px}
-  @media (max-width:760px){
-    .catalogue thead{position:absolute;left:-999px}
-    .catalogue tr{display:grid;padding:1.4rem 0;border-bottom:1px solid var(--line)}
-    .catalogue td{border:0;padding:.1rem 0}
-    .catalogue td.t-title{order:-1;margin-bottom:.5rem}
-    .catalogue td[data-label]::before{content:attr(data-label) ": ";color:var(--ink-soft)}
-  }
+  .grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem}
+  .grid li:first-child{grid-column:1 / -1}
+  .tile{display:flex;flex-direction:column;height:100%;background:#FBF8F2;border:1px solid #E2DBCF;border-radius:24px;overflow:hidden;text-decoration:none;transition:transform .35s,box-shadow .35s}
+  .tile:hover{transform:translateY(-6px);box-shadow:0 26px 44px -30px rgba(43,20,24,.55)}
+  .t-plinth{position:relative;display:flex;justify-content:center;align-items:flex-start;height:300px;padding-top:30px;background:var(--plinth);overflow:hidden}
+  .grid li:first-child .t-plinth{height:340px}
+  .t-plinth :global(.phone-holder){transition:transform .6s cubic-bezier(.2,.75,.15,1)}
+  .tile:hover .t-plinth :global(.phone-holder){transform:translateY(-8px)}
+  .t-body{display:flex;flex-direction:column;gap:.5rem;padding:1.5rem 1.6rem 1.7rem}
+  .t-res{align-self:flex-start;padding:.25rem .7rem;border-radius:999px;border:1px solid var(--ink);font-size:.8rem;font-weight:600}
+  .t-res[data-res="Track winner"],.t-res[data-res="2nd place"]{background:var(--wall);color:var(--ivory);border-color:var(--wall)}
+  .t-title{font-family:var(--serif);font-size:clamp(2rem,3.6vw,2.8rem);line-height:1;letter-spacing:-.02em}
+  .t-dec{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--ink-soft)}
+  .t-meta{font-size:.88rem;color:var(--ink-soft)}
+  @media (max-width:760px){.grid{grid-template-columns:1fr}}
 </style>

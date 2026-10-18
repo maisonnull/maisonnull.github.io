@@ -3,8 +3,10 @@ title: Recall
 year: 2026
 medium: AI system design for card disputes
 provenance: 2nd place, American Express AI Hackathon 2026
-summary: Helps card members recognise charges they've forgotten, using their own card history, so honest confusion doesn't become a dispute.
+summary: "Helps card members recognise charges they've forgotten, using their own card history, so honest confusion doesn't become a dispute."
 order: 2
+result: 2nd place
+decision: The model is never allowed to be sure.
 ---
 
 ## The brief

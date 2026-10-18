@@ -11,6 +11,8 @@ const work = defineCollection({
     provenance: z.string(),
     summary: z.string(),
     order: z.number(),
+    result: z.string(),
+    decision: z.string(),
     link: z.string().optional(),
     linkLabel: z.string().optional(),
   }),

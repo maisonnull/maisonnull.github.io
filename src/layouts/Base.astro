@@ -40,7 +40,7 @@ const links = [
     rel="stylesheet"
   />
 </head>
-<body>
+<body class={current === 'home' ? 'is-home' : undefined}>
   <a class="skip" href="#main">Skip to content</a>
   <header class="site-head">
     <div class="wrap">
@@ -54,15 +54,13 @@ const links = [
   </header>
   <main id="main"><slot /></main>
   <footer class="site-foot">
-    <div class="wrap">
-      <div>
-        <a class="wordmark" href={`${base}/`}>Maison<code>null</code></a>
-        <p>A studio for well-made software. Singapore, {new Date().getFullYear()}.</p>
-      </div>
+    <div class="wrap foot-row">
+      <p>A studio for well-made software. Singapore, {new Date().getFullYear()}.</p>
       <nav class="nav" aria-label="Footer">
         {links.map((l) => <a href={`${base}${l.href}`}>{l.label}</a>)}
       </nav>
     </div>
+    <p class="foot-mark" aria-hidden="true">Maison<code>null</code></p>
   </footer>
 </body>
 </html>
