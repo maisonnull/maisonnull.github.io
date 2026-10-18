@@ -9,14 +9,6 @@ import { plinth } from '../data/plinths';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 
-
-const credits = work.filter((w) => w.data.result !== 'Submitted');
-// Short event names for the credits line under the hero.
-const shortEvent: Record<string, string> = {
-  'lead-time': 'ForgeHacks 2026',
-  recall: 'American Express AI Hackathon',
-  'voucher-kaki': 'SimplifyNext IGNITE',
-};
 const marquee = ['Landing pages', 'Web apps', 'AI tools', 'Full sites', 'Product launches', 'Commissions open'];
 
 const principles = [
@@ -61,17 +53,17 @@ const compare = {
         <p class="lede">Maison Null designs and builds websites, apps and AI products. Every piece starts as an empty screen, and nothing leaves the house until it works for the person using it.</p>
         <div class="btns">
           <a class="btn primary" href={`${base}/contact/`}>Start a commission</a>
-          <a class="btn ghost" href="#work">See the work</a>
+          <a class="btn ghost" href="#work">See samples</a>
         </div>
       </div>
       <BriefFrame />
     </div>
 
-    <div class="wrap"><div class="credits">
-      {credits.map((c) => (
-        <p class="credit"><span class="c-res">{c.data.result}</span><span class="c-from">{c.data.title}, {shortEvent[c.id] ?? c.data.provenance}</span></p>
-      ))}
-    </div></div>
+    <div class="wrap"><ul class="offer">
+      <li><span class="o-n">01</span>Websites</li>
+      <li><span class="o-n">02</span>Web and mobile apps</li>
+      <li><span class="o-n">03</span>AI products</li>
+    </ul></div>
   </section>
 
   <!-- ======================= MARQUEE ======================= -->
@@ -88,23 +80,23 @@ const compare = {
   <!-- ======================= WORK: stacked exhibits ======================= -->
   <section class="work" id="work">
     <div class="wrap work-head">
-      <h2>Selected work</h2>
-      <p>Five pieces from 2026, each with the decision that shaped it. <a href={`${base}/work/`}>All work</a></p>
+      <h2>Design samples</h2>
+      <p>Interfaces designed in the house, shown as examples of what can be made for you. Each comes with the decision that shaped it.</p>
     </div>
     <ol class="stack">
       {work.map((p, i) => (
         <li class="exhibit-card" style={`--i:${i};--plinth:${plinth[p.id] ?? '#E7E2D8'}`}>
-          <a class="ec-link" href={`${base}/work/${p.id}/`} aria-label={`${p.data.title}: read the story`}></a>
+          <a class="ec-link" href={`${base}/work/${p.id}/`} aria-label={`${p.data.title}: see the design notes`}></a>
           <div class="ec-text">
-            <p class="ec-res" data-res={p.data.result}>{p.data.result}</p>
+            <p class="ec-res">Sample {String(i + 1).padStart(2, '0')}</p>
             <h3>{p.data.title}</h3>
             <p class="ec-sum">{p.data.summary}</p>
             <blockquote class="ec-dec">{p.data.decision}</blockquote>
             <dl class="ec-meta">
-              <dt>Medium</dt><dd>{p.data.medium}</dd>
-              <dt>Provenance</dt><dd>{p.data.provenance}</dd>
+              <dt>Type</dt><dd>{p.data.kind}</dd>
+              <dt>Designed for</dt><dd>{p.data.sector}</dd>
             </dl>
-            <span class="ec-more">Read the story</span>
+            <span class="ec-more">See the design notes</span>
           </div>
           <div class="ec-plinth">
             <Phone id={p.id} scale={0.86} />
@@ -275,9 +267,9 @@ const compare = {
   .hero .btn.primary:hover{background:#fff;border-color:#fff}
   .btn.ghost{color:var(--ivory);border-color:rgba(239,233,220,.45)}
   .btn.ghost:hover{border-color:var(--ivory)}
-  .credits{display:grid;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:.6rem 1.5rem;margin-top:clamp(2.5rem,6vh,4.5rem);padding-top:1.4rem;border-top:1px solid rgba(239,233,220,.14)}
-  .credit{margin:0;display:flex;gap:.7rem;align-items:baseline;font-size:.95rem;color:var(--ivory-soft)}
-  .c-res{font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--ivory)}
+  .offer{list-style:none;display:grid;grid-template-columns:repeat(3,auto);justify-content:space-between;gap:.6rem 1.5rem;margin:clamp(2.5rem,6vh,4.5rem) 0 0;padding:1.4rem 0 0;border-top:1px solid rgba(239,233,220,.14);font-family:var(--serif);font-style:italic;font-size:1.25rem;color:var(--ivory)}
+  .offer li{display:flex;gap:.7rem;align-items:baseline}
+  .o-n{font-family:var(--mono);font-style:normal;font-size:.8rem;color:var(--brass)}
 
   /* ---------- marquee ---------- */
   .marquee{background:var(--brass);color:#1C0E11;overflow:hidden;white-space:nowrap;padding:1.05rem 0;border-block:1px solid #8E6F3E}
@@ -306,7 +298,6 @@ const compare = {
   .ec-link:focus-visible{outline:3px solid var(--brass);outline-offset:-3px}
   .ec-text{display:flex;flex-direction:column;justify-content:center;padding:clamp(1.8rem,4vw,3.4rem)}
   .ec-res{align-self:flex-start;margin:0 0 1.2rem;padding:.3rem .8rem;border-radius:999px;border:1px solid var(--ink);font-size:.85rem;font-weight:600}
-  .ec-res[data-res="Track winner"],.ec-res[data-res="2nd place"]{background:var(--wall);color:var(--ivory);border-color:var(--wall)}
   .exhibit-card h3{font-size:clamp(2.6rem,5.6vw,4.8rem);line-height:.95;letter-spacing:-.025em;margin:0 0 1.1rem}
   .ec-sum{margin:0 0 1.2rem;font-size:1.1rem;max-width:44ch}
   .ec-dec{margin:0 0 1.4rem;padding-left:1rem;border-left:2px solid var(--brass);font-family:var(--serif);font-style:italic;font-size:1.35rem;line-height:1.3}
@@ -382,7 +373,7 @@ const compare = {
   /* ---------- responsive ---------- */
   @media (max-width:860px){
     .hero{min-height:auto;padding-top:9.5rem}
-    .credits{grid-template-columns:1fr}
+    .offer{grid-template-columns:1fr}
     .hero-grid{grid-template-columns:1fr}
     .exhibit-card{position:relative;top:auto;grid-template-columns:1fr;min-height:0;transform:none;filter:none}
     .ec-plinth{order:-1;height:300px;align-items:flex-start;padding-top:28px}

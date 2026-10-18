@@ -1,30 +1,26 @@
 ---
 title: Pinch
-year: 2026
-medium: React, Node, Gemini, Web Audio
-provenance: "Build With AI: Basics 2026 (Devpost)"
-result: Submitted
-decision: It never guesses an amount.
-summary: "Interviews your grandparent while they cook, so \"a pinch\", \"a splash\" and \"until it smells right\" get pinned down while their hands are still in the pot."
-order: 4
-link: https://pinch-htpl.onrender.com
-linkLabel: Try Pinch
+kind: Mobile web app, voice-led
+sector: Families saving recipes
+summary: "A kitchen companion that listens while a grandparent cooks, and asks the one question that pins down \"a pinch\" or \"a splash\" while their hands are still in the pot."
+decision: It never fills in an amount she didn't say.
+order: 2
 ---
 
 ## The brief
 
-Family recipes often live only in someone's head, written down as "a pinch" or "until it smells right". Most recipe apps record first and sort it out afterwards, and by the time they notice an amount is vague, the cook has left the kitchen.
+Family recipes often live only in someone's head, written as "a pinch" or "until it smells right". The person who knows the recipe is usually older, standing at a stove, with flour on their hands. The interface has to work for her from across the kitchen, without a single tap.
 
-Pinch asks during the cooking. After each step, it either stays quiet because the step is clear, or asks one follow-up question, out loud and in big text. At the end you get a printable, notebook-style card with her words, her reasons, and an honest "Still unknown" list.
+## The design
 
-## The decision
-
-It never guesses an amount.
+Pinch speaks one short question at a time, out loud and in very large type, and only when a step is genuinely unclear. Most of the time it stays quiet. At the end it produces a notebook-style recipe card in her words, with her reasons in quotes beside each step.
 
 > The butter amount was never said, so it stays unknown.
 
-Gemini decides what to ask. Plain server code checks every amount, number and quote on the card against what the cook actually said. Anything it can't trace back to her words becomes "amount unknown", so the card never invents a measurement she didn't give.
+Anything she didn't actually say is marked "amount unknown" instead of being guessed. The card ends with a "Still unknown" list, which turns gaps into a reason to call her again rather than a silent error.
 
-## Questions are rationed on purpose
+## The details
 
-Nobody wants to be interrupted every ten seconds while cooking. Pinch allows at most one question per step and three per session, enforced by the app rather than left to the model. If the AI service is down, it falls back to notes mode, which still saves her exact words.
+- **Readable from a metre away.** Large serif type, high contrast, and one idea per screen.
+- **Rationed questions.** At most one per step and three per session, so cooking is never interrupted every ten seconds.
+- **A card worth printing.** Warm paper tones and handwritten-style quotes, because the result is meant to be kept in a drawer, not an app.

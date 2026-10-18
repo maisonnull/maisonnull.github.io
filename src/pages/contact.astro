@@ -22,7 +22,7 @@ const tallySrc = `https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&
         </div>
 
         {tallyFormId ? (
-          <iframe class="tally" data-src={tallySrc} src={tallySrc} title="Commission enquiry form" loading="lazy"></iframe>
+          <iframe class="tally" data-tally-src={tallySrc} title="Commission enquiry form" loading="lazy"></iframe>
         ) : (
           <div class="soon">
             <p class="big">Enquiries open soon.</p>
@@ -52,9 +52,19 @@ const tallySrc = `https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&
       carried.hidden = false;
       carried.querySelector('.c-text')!.textContent = `“${brief}”`;
     }
-    // Pass the brief into the Tally form's hidden field named "brief".
-    const tally = document.querySelector<HTMLIFrameElement>('.tally');
-    if (tally) tally.src = `${tally.dataset.src}&brief=${encodeURIComponent(brief)}`;
+  }
+  // Load the Tally form. Its embed script resizes the iframe to fit the form.
+  const tally = document.querySelector<HTMLIFrameElement>('.tally');
+  if (tally) {
+    // Pass the brief into the form's hidden field named "brief".
+    if (brief) tally.dataset.tallySrc += `&brief=${encodeURIComponent(brief)}`;
+    const direct = () => { if (!tally.src) tally.src = tally.dataset.tallySrc!; };
+    const s = document.createElement('script');
+    s.src = 'https://tally.so/widgets/embed.js';
+    s.onload = () => { const T = (window as any).Tally; T ? T.loadEmbeds() : direct(); };
+    s.onerror = direct;
+    document.body.appendChild(s);
+    setTimeout(direct, 4000);
   }
 </script>
 

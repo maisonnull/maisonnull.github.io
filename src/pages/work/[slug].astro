@@ -8,10 +8,10 @@ export async function getStaticPaths() {
   const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
   return work.map((entry, i) => ({
     params: { slug: entry.id },
-    props: { entry, next: work[(i + 1) % work.length] },
+    props: { entry, n: i + 1, next: work[(i + 1) % work.length] },
   }));
 }
-const { entry, next } = Astro.props;
+const { entry, n, next } = Astro.props;
 const { Content } = await render(entry);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const d = entry.data;
@@ -20,16 +20,15 @@ const d = entry.data;
   <section class="cs-hero">
     <div class="wrap cs-grid">
       <div>
-        <a class="back" href={`${base}/work/`}>All work</a>
-        <p class="cs-res" data-res={d.result}>{d.result}</p>
+        <a class="back" href={`${base}/work/`}>All samples</a>
+        <p class="cs-res">Design sample {String(n).padStart(2, '0')}</p>
         <h1>{d.title}</h1>
         <p class="lede">{d.summary}</p>
         <dl class="placard-data">
-          <dt>Year</dt><dd>{d.year}</dd>
-          <dt>Medium</dt><dd>{d.medium}</dd>
-          <dt>Provenance</dt><dd>{d.provenance}</dd>
+          <dt>Type</dt><dd>{d.kind}</dd>
+          <dt>Designed for</dt><dd>{d.sector}</dd>
         </dl>
-        {d.link && <div class="btns"><a class="btn primary" href={d.link}>{d.linkLabel ?? 'Visit'}</a></div>}
+        <div class="btns"><a class="btn primary" href={`${base}/contact/`}>Commission something like this</a></div>
       </div>
       <div class="cs-plinth" style={`--plinth:${plinth[entry.id] ?? '#E7E2D8'}`}>
         <Phone id={entry.id} scale={0.9} />
@@ -39,12 +38,11 @@ const d = entry.data;
   <section class="section">
     <div class="wrap">
       <article class="prose"><Content /></article>
-      {d.link && <div class="btns"><a class="btn ink" href={d.link}>{d.linkLabel ?? 'Visit'}</a></div>}
     </div>
   </section>
   <a class="next" href={`${base}/work/${next.id}/`}>
     <span class="wrap next-in">
-      <span class="n-label">Next piece</span>
+      <span class="n-label">Next sample</span>
       <span class="n-title">{next.data.title}</span>
     </span>
   </a>
@@ -57,7 +55,6 @@ const d = entry.data;
   .cs-hero .placard-data{margin-top:1.8rem;font-size:.92rem}
   .cs-hero .placard-data dt{color:var(--ivory-soft)}
   .cs-res{display:inline-block;margin:0 0 1.2rem;padding:.3rem .8rem;border-radius:999px;border:1px solid rgba(239,233,220,.5);font-size:.85rem;font-weight:600}
-  .cs-res[data-res="Track winner"],.cs-res[data-res="2nd place"]{background:var(--brass);border-color:var(--brass);color:#1C0E11}
   .cs-hero .btn.primary{background:var(--ivory);color:#1C0E11;border-color:var(--ivory)}
   .cs-plinth{position:relative;display:flex;justify-content:center;align-items:center;min-height:560px;border-radius:28px;background:var(--plinth);overflow:hidden}
   .cs-plinth::before{content:'';position:absolute;inset:auto 22% 6% 22%;height:22px;border-radius:50%;background:rgba(0,0,0,.3);filter:blur(16px)}

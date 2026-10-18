@@ -1,30 +1,26 @@
 ---
 title: Lead Time
-year: 2026
-medium: Python, React, open-model AI
-provenance: Winner, Business + AI track, ForgeHacks Online 2026
-result: Track winner
-decision: It grades its own forecasts.
-summary: Shows small food businesses in Singapore which overseas food trends are heading their way, whether their kitchen can make them, and how to price, stock and launch them first.
+kind: Mobile web app, forecasting dashboard
+sector: Small food businesses
+summary: An interface that tells a café or bakery which overseas food trends are heading its way, whether its kitchen can make them, and when to launch.
+decision: Every verdict admits how sure it is.
 order: 1
-link: https://lead-time-cjnn.onrender.com
-linkLabel: Try Lead Time
 ---
 
 ## The brief
 
-Food trends usually blow up overseas first. Lead Time watches weekly search interest for 22 foods across seven markets, works out how long each one has historically taken to reach Singapore, and tells a small food business which trends are heading its way.
+A small food business owner has no time to read charts. They want to know three things about a trend they keep seeing online: is it coming here, can my kitchen make it, and when should I start? The screen has to answer those in the time it takes to wait for an espresso shot.
 
-For each food it gives a verdict (Go, Go but late, Wait and watch, or Skip) and checks whether the kitchen can actually make it. Then it helps with the launch: a suggested price and margin, when to bulk order, a launch offer with its break-even, and a dated posting plan.
+## The design
 
-## The decision
+Each food gets one plain verdict at the top (Go, Go but late, Wait and watch, or Skip) and a single sentence explaining why. The supporting chart sits underneath for anyone who wants it, never in front of the answer.
 
-It grades its own forecasts, and shows the results even when they aren't flattering.
+> Past foods reached Singapore 3 weeks to 14 months later, so watch it rather than bet on a date.
 
-> Of 4 arrival forecasts that could be strictly checked, 1 fell inside its window.
+When the evidence is uneven, the interface says so in words instead of showing a confident date. That honesty became the visual language: soft status chips, a calm cream palette, and no red alarms unless something is genuinely urgent.
 
-Every calculation takes an "as of" date, and a test makes sure no future data leaks in, so the app can be rewound to any past week and checked against what really happened. When past arrivals are too uneven to predict, it says "Wait and watch" instead of inventing a date.
+## The details
 
-## The model doesn't get the last word
-
-An open model judges what the kitchen can make and drafts the launch copy, but every answer is schema-checked. Anything with dates, links, quantities or popularity claims the data doesn't support is rejected and rewritten. All the numbers come from plain Python, and if every model is down, labelled offline rules take over.
+- **One screen per question.** Trend, kitchen fit and launch plan are separate cards, so the owner can stop as soon as they have their answer.
+- **The owner's kitchen, not a generic one.** The "You can make it" check lists the actual equipment it relied on, so a wrong assumption is easy to spot.
+- **Already peaked.** A quiet row at the bottom names trends that have passed, which saves an owner from chasing last year's dessert.
