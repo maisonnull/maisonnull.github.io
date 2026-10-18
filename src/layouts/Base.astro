@@ -6,21 +6,24 @@ interface Props {
   title?: string;
   description?: string;
   current?: string;
+  /** Extra Google Fonts families for this page, e.g. the typefaces shown in a case study. */
+  fonts?: string;
 }
 const {
   title,
-  description = 'Maison Null designs and builds websites, apps and products of its own.',
+  description = 'Maison Null is a design house in Singapore. It designs websites and apps, then builds them properly.',
   current = '',
+  fonts,
 } = Astro.props;
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const fullTitle = title ? `${title} | ${studio.name}` : studio.name;
 const links = [
   { href: '/work/', label: 'Samples', key: 'work' },
-  { href: '/commissions/', label: 'Commissions', key: 'commissions' },
+  { href: '/commissions/', label: 'Services', key: 'commissions' },
   { href: '/studio/', label: 'Studio', key: 'studio' },
-  { href: '/contact/', label: 'Contact', key: 'contact' },
 ];
+const cta = { href: '/contact/', label: 'Start a project', key: 'contact' };
 ---
 <!doctype html>
 <html lang="en">
@@ -31,14 +34,15 @@ const links = [
   <meta name="description" content={description} />
   <meta property="og:title" content={fullTitle} />
   <meta property="og:description" content={description} />
-  <meta name="theme-color" content="#3B1D22" />
+  <meta name="theme-color" content="#E8E8E4" />
   <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
-    href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..700&family=Hanken+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
     rel="stylesheet"
   />
+  {fonts && <link href={`https://fonts.googleapis.com/css2?${fonts}&display=swap`} rel="stylesheet" />}
 </head>
 <body class={current === 'home' ? 'is-home' : undefined}>
   <a class="skip" href="#main">Skip to content</a>
@@ -49,18 +53,24 @@ const links = [
         {links.map((l) => (
           <a href={`${base}${l.href}`} aria-current={current === l.key ? 'page' : undefined}>{l.label}</a>
         ))}
+        <a class="nav-cta" href={`${base}${cta.href}`} aria-current={current === cta.key ? 'page' : undefined}>{cta.label}</a>
       </nav>
     </div>
   </header>
   <main id="main"><slot /></main>
   <footer class="site-foot">
     <div class="wrap foot-row">
-      <p>A studio for well-made software. Singapore, {new Date().getFullYear()}.</p>
+      <p>A design house in Singapore. Interfaces first, built properly underneath.</p>
       <nav class="nav" aria-label="Footer">
-        {links.map((l) => <a href={`${base}${l.href}`}>{l.label}</a>)}
+        {[...links, cta].map((l) => <a href={`${base}${l.href}`}>{l.label}</a>)}
       </nav>
     </div>
     <p class="foot-mark" aria-hidden="true">Maison<code>null</code></p>
   </footer>
+  <script>
+    const head = document.querySelector('.site-head');
+    const onScroll = () => head?.classList.toggle('scrolled', scrollY > 8);
+    addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  </script>
 </body>
 </html>

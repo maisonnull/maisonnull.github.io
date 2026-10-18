@@ -5,10 +5,10 @@ const { tallyFormId } = studio;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const tallySrc = `https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1`;
 ---
-<Base title="Contact" current="contact" description="Start a commission with Maison Null.">
-  <section class="wall banner">
+<Base title="Contact" current="contact" description="Start a project with Maison Null.">
+  <section class="banner">
     <div class="wrap">
-      <h1>Start a commission</h1>
+      <h1>Start a project</h1>
       <p class="lede">Tell me what you want to make, roughly when you need it, and what budget you have in mind. I reply within two working days.</p>
     </div>
   </section>
@@ -70,7 +70,7 @@ const tallySrc = `https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&
 
 <style>
   .contact{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:2.5rem clamp(2.5rem,6vw,5rem);align-items:start}
-  .carried{background:#fff;border-left:3px solid var(--brass);padding:1rem 1.2rem;margin-bottom:2rem}
+  .carried{background:var(--white);border-left:3px solid var(--cobalt);padding:1rem 1.2rem;margin-bottom:2rem}
   .c-label{margin:0 0 .3rem;font-size:.85rem;color:var(--ink-soft)}
   .c-text{margin:0;font-family:var(--serif);font-size:1.4rem;line-height:1.3}
   .tally{width:100%;min-height:640px;border:0;display:block}

@@ -1,45 +1,101 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Phone from '../../components/Phone.astro';
+import Device from '../../components/Device.astro';
 import { getCollection, render } from 'astro:content';
-import { plinth } from '../../data/plinths';
+import { samples } from '../../data/samples';
 
 export async function getStaticPaths() {
   const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
   return work.map((entry, i) => ({
     params: { slug: entry.id },
-    props: { entry, n: i + 1, next: work[(i + 1) % work.length] },
+    props: { entry, next: work[(i + 1) % work.length] },
   }));
 }
-const { entry, n, next } = Astro.props;
+const { entry, next } = Astro.props;
 const { Content } = await render(entry);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const d = entry.data;
+const s = samples[entry.id];
+const browsers = s.screens.filter((x) => x.kind === 'browser');
+const phones = [s.phone, ...s.screens.filter((x) => x.kind === 'phone')];
 ---
-<Base title={d.title} current="work" description={d.summary}>
-  <section class="cs-hero">
-    <div class="wrap cs-grid">
-      <div>
-        <a class="back" href={`${base}/work/`}>All samples</a>
-        <p class="cs-res">Design sample {String(n).padStart(2, '0')}</p>
-        <h1>{d.title}</h1>
+<Base title={d.title} current="work" description={d.summary} fonts={s.fonts}>
+  <section class="cs-head">
+    <div class="wrap">
+      <a class="back" href={`${base}/work/`}>All samples</a>
+      <h1>{d.title}</h1>
+      <div class="cs-intro">
         <p class="lede">{d.summary}</p>
         <dl class="placard-data">
           <dt>Type</dt><dd>{d.kind}</dd>
           <dt>Designed for</dt><dd>{d.sector}</dd>
+          <dt>Typefaces</dt><dd>{s.faces.map((f) => f.name).join(', ')}</dd>
         </dl>
-        <div class="btns"><a class="btn primary" href={`${base}/contact/`}>Commission something like this</a></div>
-      </div>
-      <div class="cs-plinth" style={`--plinth:${plinth[entry.id] ?? '#E7E2D8'}`}>
-        <Phone id={entry.id} scale={0.9} />
       </div>
     </div>
   </section>
+
+  <section class="wrap">
+    <div class="room" style={`--tint:${s.tint}`}>
+      <Device kind="browser" src={s.hero.src} w={s.hero.w} h={s.hero.h} mode="hover" eager alt={`${d.title}: ${s.hero.caption}`} />
+    </div>
+    <p class="room-cap">{s.hero.caption} Hover over the screen to scroll the full page.</p>
+  </section>
+
   <section class="section">
-    <div class="wrap">
+    <div class="wrap cs-body">
+      <p class="decision">{d.decision}</p>
       <article class="prose"><Content /></article>
     </div>
   </section>
+
+  <section class="section band system">
+    <div class="wrap">
+      <h2>The design system</h2>
+      <div class="swatches">
+        {s.palette.map((c) => (
+          <div class:list={['sw', { dark: c.dark }]} style={`background:${c.hex}`}>
+            <span class="sw-n">{c.name}</span>
+            <span class="sw-h">{c.hex}</span>
+            <span class="sw-r">{c.role}</span>
+          </div>
+        ))}
+      </div>
+      <div class="faces">
+        {s.faces.map((f) => (
+          <div class="face">
+            <p class="face-meta"><span class="face-n">{f.name}</span><span>{f.role}</span></p>
+            <p class="face-sample" style={`font-family:${f.css};font-size:${f.size ?? '1.6rem'}`}>{f.sample}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <h2 class="screens-h">Screens</h2>
+      {browsers.length > 0 && (
+        <div class:list={["g-browsers", { one: browsers.length === 1 }]}>
+          {browsers.map((x) => (<Device kind="browser" src={x.src} w={x.w} h={x.h} mode="hover" alt={x.caption} caption={x.caption} />))}
+        </div>
+      )}
+      <div class="g-phones" style={`--tint:${s.tint}`}>
+        {phones.map((x) => (<Device kind="phone" src={x.src} w={x.w} h={x.h} mode="hover" top={s.top} alt={x.caption} caption={x.caption} />))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section band">
+    <div class="wrap boh">
+      <div>
+        <h2>Back of house</h2>
+        <p class="boh-lede">How it is built, briefly. The design only works if this part is right.</p>
+      </div>
+      <ul>{s.build.map((b) => <li>{b}</li>)}</ul>
+    </div>
+  </section>
+
   <a class="next" href={`${base}/work/${next.id}/`}>
     <span class="wrap next-in">
       <span class="n-label">Next sample</span>
@@ -48,25 +104,55 @@ const d = entry.data;
   </a>
 </Base>
 <style>
-  .cs-hero{background:#140A0C;color:var(--ivory);padding:clamp(3rem,8vw,5.5rem) 0 clamp(3rem,7vw,5rem)}
-  .cs-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:2.5rem clamp(2.5rem,6vw,5rem);align-items:center}
-  .cs-hero h1{font-size:clamp(3rem,7.4vw,6.6rem);line-height:.92;letter-spacing:-.03em;font-weight:400}
-  .cs-hero .back{display:block;width:max-content;margin-bottom:1.4rem}
-  .cs-hero .placard-data{margin-top:1.8rem;font-size:.92rem}
-  .cs-hero .placard-data dt{color:var(--ivory-soft)}
-  .cs-res{display:inline-block;margin:0 0 1.2rem;padding:.3rem .8rem;border-radius:999px;border:1px solid rgba(239,233,220,.5);font-size:.85rem;font-weight:600}
-  .cs-hero .btn.primary{background:var(--ivory);color:#1C0E11;border-color:var(--ivory)}
-  .cs-plinth{position:relative;display:flex;justify-content:center;align-items:center;min-height:560px;border-radius:28px;background:var(--plinth);overflow:hidden}
-  .cs-plinth::before{content:'';position:absolute;inset:auto 22% 6% 22%;height:22px;border-radius:50%;background:rgba(0,0,0,.3);filter:blur(16px)}
-  .next{display:block;background:var(--wall);color:var(--ivory);text-decoration:none;padding:clamp(3rem,8vw,5rem) 0;transition:background .3s}
-  .next:hover{background:#4A242B}
-  .next-in{display:flex;flex-direction:column;gap:.4rem}
-  .n-label{font-family:var(--serif);font-style:italic;color:var(--brass);font-size:1.15rem}
-  .n-title{font-family:var(--serif);font-size:clamp(2.6rem,7vw,6rem);line-height:.95;letter-spacing:-.03em}
-  .next:hover .n-title{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.12em}
-  @media (max-width:860px){
-    .cs-grid{grid-template-columns:1fr}
-    .cs-plinth{min-height:0;height:340px;align-items:flex-start;padding-top:28px}
-    .cs-plinth :global(.phone-holder){--s:.72 !important}
+  .cs-head{padding:clamp(2.5rem,7vw,5rem) 0 clamp(2rem,5vw,3.5rem)}
+  .cs-head h1{font-size:clamp(4rem,13vw,12rem);line-height:.85;letter-spacing:-.03em}
+  .cs-intro{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:1.5rem clamp(2rem,5vw,5rem);align-items:end;margin-top:clamp(1.5rem,3vw,2.5rem)}
+  .cs-intro .lede{margin:0;max-width:46ch}
+  .room{background:var(--tint);border-radius:24px;padding:clamp(1rem,5vw,4.5rem)}
+  .room-cap{margin:1rem 0 0;font-size:.92rem;color:var(--ink-soft)}
+  .cs-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:2rem clamp(2.5rem,6vw,6rem);align-items:start}
+  .decision{position:sticky;top:6.5rem;margin:0;font-family:var(--serif);font-size:clamp(2.2rem,4.4vw,3.8rem);line-height:1;letter-spacing:-.01em;max-width:12ch}
+  .system h2,.screens-h{margin-bottom:clamp(1.8rem,4vw,2.8rem)}
+  .swatches{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:.6rem}
+  .sw{display:flex;flex-direction:column;justify-content:flex-end;min-height:13rem;padding:1rem;border-radius:6px;color:var(--ink);box-shadow:inset 0 0 0 1px rgba(0,0,0,.07);font-size:.85rem}
+  .sw.dark{color:#fff}
+  .sw-n{font-weight:600;font-size:.98rem}
+  .sw-h{font-variant-numeric:tabular-nums;opacity:.85}
+  .sw-r{margin-top:.6rem;opacity:.85;line-height:1.35}
+  .faces{margin-top:clamp(2.5rem,5vw,3.5rem)}
+  .face{display:grid;grid-template-columns:minmax(0,14rem) minmax(0,1fr);gap:.4rem 2rem;align-items:baseline;padding:1.6rem 0;border-top:1px solid var(--line)}
+  .face-meta{margin:0;display:flex;flex-direction:column;font-size:.9rem;color:var(--ink-soft)}
+  .face-n{color:var(--ink);font-weight:600;font-size:1rem}
+  .face-sample{margin:0;line-height:1.15;color:var(--ink)}
+  .g-browsers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(2rem,4vw,3.5rem) clamp(1.25rem,3vw,2.5rem)}
+  .g-browsers.one{grid-template-columns:minmax(0,1fr)}
+  .g-phones{display:grid;grid-template-columns:repeat(auto-fit,minmax(13rem,1fr));gap:2.5rem clamp(1.25rem,3vw,2.5rem);margin-top:clamp(2.5rem,5vw,4rem);padding:clamp(1.25rem,4vw,3.5rem);background:var(--tint);border-radius:24px}
+  .g-phones :global(.device){max-width:17rem;justify-self:center;width:100%}
+  .g-phones :global(figcaption){color:var(--ink)}
+  .boh{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr);gap:2rem clamp(2.5rem,6vw,6rem)}
+  .boh-lede{margin:1rem 0 0;color:var(--ink-soft);max-width:34ch}
+  .boh ul{list-style:none;margin:0;padding:0}
+  .boh li{padding:1rem 0;border-top:1px solid var(--line);max-width:60ch}
+  .boh li:last-child{border-bottom:1px solid var(--line)}
+  .next{display:block;background:var(--paper);border-top:1px solid var(--line);text-decoration:none;padding:clamp(3rem,8vw,5.5rem) 0;transition:background .3s}
+  .next:hover{background:var(--white)}
+  .next-in{display:flex;flex-direction:column;gap:.5rem}
+  .n-label{color:var(--ink-soft);font-size:.95rem}
+  .n-title{font-family:var(--serif);font-size:clamp(3.4rem,10vw,8rem);line-height:.9;letter-spacing:-.025em}
+  .next:hover .n-title{text-decoration:underline;text-decoration-thickness:2px;text-decoration-color:var(--cobalt);text-underline-offset:.1em}
+  @media (max-width:960px){
+    .cs-intro,.cs-body,.boh{grid-template-columns:1fr}
+    .decision{position:static}
+    .swatches{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .g-browsers{grid-template-columns:1fr}
+  }
+  @media (max-width:560px){
+    .swatches{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .sw{min-height:9rem}
+    .face{grid-template-columns:1fr}
+    .g-phones{grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem .9rem}
+    .g-phones :global(.phone .body){border-radius:28px;padding:6px}
+    .g-phones :global(.phone .screen){border-radius:23px;padding-top:22px}
+    .g-phones :global(.island){top:11px;height:14px}
   }
 </style>

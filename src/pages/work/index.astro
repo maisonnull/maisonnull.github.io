@@ -1,49 +1,46 @@
 ---
 import Base from '../../layouts/Base.astro';
-import Phone from '../../components/Phone.astro';
+import Device from '../../components/Device.astro';
 import { getCollection } from 'astro:content';
-import { plinth } from '../../data/plinths';
+import { samples } from '../../data/samples';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 ---
-<Base title="Samples" current="work" description="Interface design samples by Maison Null.">
-  <section class="wall banner">
+<Base title="Samples" current="work" description="Interface design samples by Maison Null: real screens, palettes and typefaces.">
+  <section class="banner">
     <div class="wrap">
       <h1>Samples</h1>
-      <p class="lede">Interfaces designed in the house, shown as examples of what can be made for you. Each one comes with the decision that shaped it.</p>
+      <p class="lede">Interfaces designed and built in the house, shown as examples of what can be made for you. Each one comes with its design system and the decision that shaped it.</p>
     </div>
   </section>
-  <section class="section">
-    <div class="wrap">
-      <ul class="grid">
-        {work.map((p, i) => (
-          <li>
-            <a class="tile" href={`${base}/work/${p.id}/`}>
-              <span class="t-plinth" style={`--plinth:${plinth[p.id] ?? '#E7E2D8'}`}><Phone id={p.id} scale={0.62} /></span>
-              <span class="t-body">
-                <span class="t-res">Sample {String(i + 1).padStart(2, '0')}</span>
-                <span class="t-title">{p.data.title}</span>
-                <span class="t-dec">{p.data.decision}</span>
-                <span class="t-meta">{p.data.kind}, for {p.data.sector.toLowerCase()}</span>
-              </span>
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
+  <section class="wrap list">
+    {work.map((p) => {
+      const s = samples[p.id];
+      return (
+        <a class="tile" href={`${base}/work/${p.id}/`} style={`--tint:${s.tint}`}>
+          <span class="t-room">
+            <Device kind="browser" src={`${s.hero.src}-top`} w={2000} h={1250} alt="" />
+          </span>
+          <span class="t-body">
+            <span class="t-title">{p.data.title}</span>
+            <span class="t-sum">{p.data.summary}</span>
+            <span class="t-meta">{p.data.kind}, for {p.data.sector.toLowerCase()}</span>
+          </span>
+        </a>
+      );
+    })}
   </section>
 </Base>
 <style>
-  .grid{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.5rem}
-    .tile{display:flex;flex-direction:column;height:100%;background:#FBF8F2;border:1px solid #E2DBCF;border-radius:24px;overflow:hidden;text-decoration:none;transition:transform .35s,box-shadow .35s}
-  .tile:hover{transform:translateY(-6px);box-shadow:0 26px 44px -30px rgba(43,20,24,.55)}
-  .t-plinth{position:relative;display:flex;justify-content:center;align-items:flex-start;height:380px;padding-top:36px;background:var(--plinth);overflow:hidden}
-  .t-plinth :global(.phone-holder){transition:transform .6s cubic-bezier(.2,.75,.15,1)}
-  .tile:hover .t-plinth :global(.phone-holder){transform:translateY(-8px)}
-  .t-body{display:flex;flex-direction:column;gap:.5rem;padding:1.5rem 1.6rem 1.7rem}
-  .t-res{align-self:flex-start;padding:.25rem .7rem;border-radius:999px;border:1px solid var(--ink);font-size:.8rem;font-weight:600}
-  .t-title{font-family:var(--serif);font-size:clamp(2rem,3.6vw,2.8rem);line-height:1;letter-spacing:-.02em}
-  .t-dec{font-family:var(--serif);font-style:italic;font-size:1.15rem;color:var(--ink-soft)}
-  .t-meta{font-size:.88rem;color:var(--ink-soft)}
-  @media (max-width:760px){.grid{grid-template-columns:1fr}}
+  .list{display:grid;gap:clamp(3rem,7vw,6rem);padding-bottom:clamp(4rem,9vw,7rem)}
+  .tile{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:1.5rem clamp(2rem,5vw,4.5rem);align-items:end;text-decoration:none}
+  .t-room{display:block;background:var(--tint);border-radius:24px;padding:clamp(1rem,4vw,3.5rem)}
+  .t-room :global(.device){transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+  .tile:hover .t-room :global(.device){transform:translateY(-6px)}
+  .t-body{display:flex;flex-direction:column;gap:.8rem}
+  .t-title{font-family:var(--serif);font-size:clamp(3rem,7vw,6rem);line-height:.9;letter-spacing:-.02em}
+  .tile:hover .t-title{text-decoration:underline;text-decoration-thickness:2px;text-decoration-color:var(--cobalt);text-underline-offset:.1em}
+  .t-sum{max-width:40ch}
+  .t-meta{font-size:.9rem;color:var(--ink-soft)}
+  @media (max-width:860px){.tile{grid-template-columns:1fr}}
 </style>

@@ -5,15 +5,16 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const steps = [
   { name: 'Enquire', text: 'Tell me what you need and when. I reply within two working days.' },
   { name: 'Scope', text: 'We agree what is being built, the price and the dates, in writing, before any work starts.' },
-  { name: 'Build', text: 'You get a private preview link to check progress as the piece takes shape.' },
+  { name: 'Design', text: 'Screens come first, so you can see and change the product before it is built.' },
+  { name: 'Build', text: 'You get a private preview link to check progress as it takes shape.' },
   { name: 'Launch', text: 'It goes live on your domain and your accounts. You own everything, including the code.' },
 ];
 ---
-<Base title="Commissions" current="commissions" description="Websites and apps made to order by Maison Null, with prices.">
-  <section class="wall banner">
+<Base title="Services" current="commissions" description="Websites and apps designed and built by Maison Null, with starting prices.">
+  <section class="banner">
     <div class="wrap">
-      <h1>Commissions</h1>
-      <p class="lede">Websites and apps made to order. Prices are starting points in Singapore dollars, and every commission is quoted in writing before work begins.</p>
+      <h1>Services and prices</h1>
+      <p class="lede">Every project is designed first and then built. Prices are starting points in Singapore dollars, and every project is quoted in writing before work begins.</p>
     </div>
   </section>
 
@@ -25,7 +26,7 @@ const steps = [
           <h2>{founding.discount} for the first {founding.slots} clients.</h2>
           <p>The house is new, so the first {founding.slots} commissions are discounted, {founding.terms}. Same scope, same care, lower price.</p>
         </div>
-        <a class="btn ink" href={`${base}/contact/`}>Claim a founding spot</a>
+        <a class="btn solid" href={`${base}/contact/`}>Claim a founding spot</a>
       </div>
     </section>
   )}
@@ -65,7 +66,7 @@ const steps = [
 
   <section class="section">
     <div class="wrap">
-      <h2>Every commission includes</h2>
+      <h2>Every project includes</h2>
       <dl class="included">
         {included.map((i) => (<div><dt>{i.name}</dt><dd>{i.text}</dd></div>))}
       </dl>
@@ -74,7 +75,7 @@ const steps = [
 
   <section class="section">
     <div class="wrap">
-      <h2>How a commission works</h2>
+      <h2>How a project works</h2>
       <ol class="steps">
         {steps.map((s) => (
           <li><h3>{s.name}</h3><p>{s.text}</p></li>
@@ -101,14 +102,14 @@ const steps = [
     <div class="wrap">
       <h2>Have something in mind?</h2>
       <p class="lede-ink">Describe it in a sentence. That is enough to start.</p>
-      <div class="btns"><a class="btn ink" href={`${base}/contact/`}>Start a commission</a></div>
+      <div class="btns"><a class="btn solid" href={`${base}/contact/`}>Start a project</a></div>
     </div>
   </section>
 </Base>
 <style>
-  .founding{background:#fff;border-bottom:1px solid var(--line)}
+  .founding{background:var(--paper);border-block:1px solid var(--line)}
   .founding-inner{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:1rem 2.5rem;align-items:center;padding-top:2.2rem;padding-bottom:2.2rem}
-  .f-tag{margin:0;font-family:var(--serif);font-style:italic;color:var(--brass);font-size:1.15rem;white-space:nowrap}
+  .f-tag{margin:0;font-weight:600;color:var(--cobalt);white-space:nowrap}
   .founding h2{font-size:clamp(1.5rem,2.8vw,2rem);margin-bottom:.4rem}
   .founding p{margin:0;max-width:60ch;color:var(--ink-soft)}
   .founding .btn{white-space:nowrap}
@@ -119,7 +120,7 @@ const steps = [
   .faq-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:2rem 4rem}
   .faq details{border-top:1px solid var(--line)}
   .faq details:last-child{border-bottom:1px solid var(--line)}
-  .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:1rem;padding:1.1rem 0;font-family:var(--serif);font-size:1.3rem}
+  .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:1rem;padding:1.1rem 0;font-family:var(--serif);font-size:1.55rem}
   .faq summary::-webkit-details-marker{display:none}
   .faq summary::after{content:'+';font-family:var(--sans);color:var(--ink-soft);transition:transform .2s}
   .faq details[open] summary::after{transform:rotate(45deg)}
@@ -136,12 +137,12 @@ const steps = [
   .sum{margin:.6rem 0 0;font-size:1.1rem;max-width:52ch}
   .incl{margin:.9rem 0 0;padding-left:1.1rem;color:var(--ink-soft);columns:2;column-gap:2.5rem}
   .incl li{break-inside:avoid;margin-bottom:.3rem}
-  .time{margin:.9rem 0 0;font-size:.95rem;color:var(--ink-soft);font-style:italic}
+  .time{margin:.9rem 0 0;font-size:.95rem;color:var(--ink-soft)}
   .sub{font-size:clamp(1.6rem,3vw,2.1rem);margin:4rem 0 1.2rem}
   .small .item-head h3{font-size:1.5rem}
-  .steps{list-style:none;counter-reset:s;margin:2.2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:2rem}
+  .steps{list-style:none;counter-reset:s;margin:2.2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2rem}
   .steps li{counter-increment:s;border-top:1px solid var(--ink);padding-top:1rem}
-  .steps li::before{content:counter(s);font-family:var(--serif);font-size:2.4rem;line-height:1;display:block;margin-bottom:.6rem}
+  .steps li::before{content:counter(s);font-family:var(--serif);font-size:2.6rem;line-height:1;display:block;margin-bottom:.6rem;color:var(--cobalt)}
   .steps h3{font-size:1.3rem;margin-bottom:.4rem}
   .steps p{margin:0;color:var(--ink-soft)}
   @media (max-width:860px){.founding-inner,.faq-wrap{grid-template-columns:1fr}}

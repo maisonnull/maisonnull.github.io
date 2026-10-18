@@ -4,29 +4,30 @@ import { studio } from '../config';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 ---
 <Base title="Studio" current="studio" description="About Maison Null, a studio for well-made software.">
-  <section class="wall banner">
+  <section class="banner">
     <div class="wrap">
       <h1>Studio</h1>
-      <p class="lede">Maison Null is a one-person studio for now, run by {studio.founder} in Singapore. It makes products of its own and takes on a small number of commissions.</p>
+      <p class="lede">Maison Null is a design house in Singapore, run by {studio.founder}. It designs interfaces first and builds them properly underneath, for a small number of clients at a time.</p>
     </div>
   </section>
   <section class="section">
     <div class="wrap cols">
       <div class="prose">
         <h2>The name</h2>
-        <p>A maison is a house where things are made by hand. Null is the value a program holds before anything has been put there. Every piece here starts as that empty value, and the job of the house is to fill it with something worth keeping.</p>
+        <p>A maison is a house where things are made by hand. Null is the value a program holds before anything has been put there. Every project here starts as that empty screen, and the job of the house is to fill it with something worth keeping.</p>
         <h2>Who I picture</h2>
         <p>For three years in school, I went out every quarter with a volunteer group to visit elderly residents, in their own neighbourhoods and at homes for the aged. When I decide what goes on a screen, they are who I picture: people who were never the target user. If something works for them, it usually works for everyone else too.</p>
       </div>
       <div>
         <h2 class="h-rules">How the house works</h2>
         <ul class="rules">
+          <li>Design first. Decide how it should look and feel before writing the code.</li>
           <li>Put AI where judgement is needed, and keep it out where correctness is needed.</li>
           <li>Build things that degrade instead of breaking: a second provider, a fallback, offline data underneath.</li>
           <li>Say plainly what is real and what is not. No invented numbers, no hidden fakery.</li>
           <li>You own what you commission: the domain, the accounts and the code.</li>
         </ul>
-        <div class="btns"><a class="btn ink" href={`${base}/contact/`}>Start a commission</a></div>
+        <div class="btns"><a class="btn solid" href={`${base}/contact/`}>Start a project</a></div>
       </div>
     </div>
   </section>
@@ -37,5 +38,6 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, '');
   .rules{list-style:none;margin:0;padding:0}
   .rules li{padding:1rem 0;border-bottom:1px solid var(--line);font-size:1.05rem}
   .rules li:first-child{border-top:1px solid var(--ink)}
+  .cols h2{font-size:clamp(1.9rem,3.2vw,2.6rem)}
   @media (max-width:860px){.cols{grid-template-columns:1fr}}
 </style>
