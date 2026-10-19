@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import { studio } from '../config';
-const { tallyFormId } = studio;
+const { tallyFormId, callLink } = studio;
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const tallySrc = `https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1`;
 ---
@@ -39,6 +39,13 @@ const tallySrc = `https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&
           <li><b>You get a preview link</b> as soon as there&rsquo;s something to see.</li>
         </ol>
         <p><a href={`${base}/commissions/`}>See prices and the FAQ</a></p>
+        {callLink && (
+          <div class="call">
+            <p class="call-h">Rather talk it through?</p>
+            <p>Book a free 15-minute call and describe the project out loud.</p>
+            <a class="btn" href={callLink} target="_blank" rel="noopener" data-call>Book a 15-minute call</a>
+          </div>
+        )}
       </aside>
     </div>
   </section>
@@ -53,6 +60,19 @@ const tallySrc = `https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&
       carried.querySelector('.c-text')!.textContent = `“${brief}”`;
     }
   }
+  const track = (path: string, title: string) => (window as any).mnTrack?.(path, title);
+  document.querySelectorAll('[data-call]').forEach((a) => a.addEventListener('click', () => track('call-booking-opened', 'Opened the call booking page')));
+
+  // When the form is sent: count it, and forget the sentence saved by the home page frame.
+  addEventListener('message', (e) => {
+    if (e.origin !== 'https://tally.so') return;
+    const data = typeof e.data === 'string' ? e.data : JSON.stringify(e.data ?? '');
+    if (data.includes('Tally.FormSubmitted')) {
+      track('brief-submitted', 'Submitted the enquiry form');
+      try { localStorage.removeItem('mn-brief'); } catch {}
+    }
+  });
+
   // Load the Tally form. Its embed script resizes the iframe to fit the form.
   const tally = document.querySelector<HTMLIFrameElement>('.tally');
   if (tally) {
@@ -82,5 +102,10 @@ const tallySrc = `https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&
   .next li{margin-bottom:.7rem}
   .next b{color:var(--ink);font-weight:600}
   .next a{color:var(--ink-soft)}
+  .call{margin-top:2rem;padding:1.3rem;background:var(--white);border:1px solid var(--line);border-radius:14px}
+  .call p{margin:0 0 .9rem;color:var(--ink-soft)}
+  .call .call-h{margin:0 0 .3rem;color:var(--ink);font-family:var(--serif);font-size:1.5rem;line-height:1.1}
+  .call .btn{color:var(--ink)}
+  .call .btn:hover{color:var(--wall)}
   @media (max-width:860px){.contact{grid-template-columns:1fr}}
 </style>

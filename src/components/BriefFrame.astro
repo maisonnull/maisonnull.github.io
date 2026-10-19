@@ -42,6 +42,17 @@ const examples = [
     const examples: string[] = JSON.parse(fig.dataset.examples || '[]');
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const contact = cta.getAttribute('href') || '/contact/';
+    const track = (path: string, title: string) => (window as any).mnTrack?.(path, title);
+
+    // Remember the sentence in this browser only, so a visitor who leaves finds it waiting.
+    const KEY = 'mn-brief';
+    const store = {
+      get: () => { try { return localStorage.getItem(KEY) || ''; } catch { return ''; } },
+      set: (v: string) => { try { v ? localStorage.setItem(KEY, v) : localStorage.removeItem(KEY); } catch {} },
+    };
+    const saved = store.get();
+    if (saved) input.value = saved;
+    let restored = !!saved, counted = false;
 
     // Ghost typing: type an example, pause, erase, next. Stops while the visitor writes.
     let ex = 0, pos = 0, dir = 1, timer = 0;
@@ -74,7 +85,9 @@ const examples = [
         const short = v.length > 46 ? v.slice(0, 44).trimEnd() + '…' : v;
         name.textContent = `Untitled (${short})`;
         medium.textContent = 'A brief, written by you';
-        note.textContent = 'Every project here starts with a sentence like this.';
+        note.textContent = restored
+          ? 'Your sentence is still here from last time. Send it when you’re ready.'
+          : 'Every project here starts with a sentence like this.';
         cta.hidden = false;
         cta.href = `${contact}?brief=${encodeURIComponent(v)}`;
       } else {
@@ -86,14 +99,21 @@ const examples = [
       }
     }
 
-    input.addEventListener('input', render);
+    input.addEventListener('input', () => {
+      restored = false;
+      render();
+      store.set(input.value.trim());
+      if (!counted && input.value.trim()) { counted = true; track('brief-written', 'Wrote in the frame'); }
+    });
+    const send = () => track('brief-sent', 'Sent the brief from the frame');
+    cta.addEventListener('click', send);
     input.addEventListener('focus', () => { clearTimeout(timer); ghost.textContent = ''; fig.classList.add('writing'); });
     input.addEventListener('blur', () => { fig.classList.remove('writing'); if (!input.value) startGhost(); });
     input.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey && input.value.trim()) { e.preventDefault(); window.location.href = cta.href; }
+      if (e.key === 'Enter' && !e.shiftKey && input.value.trim()) { e.preventDefault(); send(); window.location.href = cta.href; }
     });
     render();
-    startGhost();
+    if (!saved) startGhost();
   }
 </script>
 

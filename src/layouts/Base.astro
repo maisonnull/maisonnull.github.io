@@ -42,6 +42,13 @@ const cta = { href: '/contact/', label: 'Start a project', key: 'contact' };
     href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400&display=swap"
     rel="stylesheet"
   />
+  <script is:inline>
+    // Count a step (wrote in the frame, sent the brief, submitted, booked a call). Does nothing if counting is off.
+    window.mnTrack = function (path, title) {
+      try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: path, title: title || path, event: true }); } catch (e) {}
+    };
+  </script>
+  {studio.goatcounter && <script is:inline data-goatcounter={`https://${studio.goatcounter}.goatcounter.com/count`} async src="//gc.zgo.at/count.js"></script>}
   {fonts && <link href={`https://fonts.googleapis.com/css2?${fonts}&display=swap`} rel="stylesheet" />}
 </head>
 <body class={current === 'home' ? 'is-home' : undefined}>
