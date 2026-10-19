@@ -10,5 +10,5 @@ export const studio = {
   callLink: 'https://cal.com/nathan-quek/15min',
   // Visit counts: make a free account at goatcounter.com and paste your code here
   // (for maisonnull.goatcounter.com, the code is "maisonnull"). Leave empty to switch counting off.
-  goatcounter: '',
+  goatcounter: 'maisonnull',
 };
