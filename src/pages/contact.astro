@@ -32,6 +32,13 @@ const tallySrc = `https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&
       </div>
 
       <aside class="next">
+        {callLink && (
+          <div class="call call-top">
+            <p class="call-h">Rather talk it through?</p>
+            <p>Book a free 15-minute call and describe the project out loud.</p>
+            <a class="btn" href={callLink} target="_blank" rel="noopener" data-call>Book a 15-minute call</a>
+          </div>
+        )}
         <h2>What happens next</h2>
         <ol>
           <li><b>I reply within two working days</b> with a few questions, if any.</li>
@@ -39,13 +46,6 @@ const tallySrc = `https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&
           <li><b>You get a preview link</b> as soon as there&rsquo;s something to see.</li>
         </ol>
         <p><a href={`${base}/commissions/`}>See prices and the FAQ</a></p>
-        {callLink && (
-          <div class="call">
-            <p class="call-h">Rather talk it through?</p>
-            <p>Book a free 15-minute call and describe the project out loud.</p>
-            <a class="btn" href={callLink} target="_blank" rel="noopener" data-call>Book a 15-minute call</a>
-          </div>
-        )}
       </aside>
     </div>
   </section>
@@ -102,7 +102,7 @@ const tallySrc = `https://tally.so/embed/${tallyFormId}?alignLeft=1&hideTitle=1&
   .next li{margin-bottom:.7rem}
   .next b{color:var(--ink);font-weight:600}
   .next a{color:var(--ink-soft)}
-  .call{margin-top:2rem;padding:1.3rem;background:var(--white);border:1px solid var(--line);border-radius:14px}
+  .call{margin:0 0 2.2rem;padding:1.3rem;background:var(--white);border:1px solid var(--line);border-radius:14px}
   .call p{margin:0 0 .9rem;color:var(--ink-soft)}
   .call .call-h{margin:0 0 .3rem;color:var(--ink);font-family:var(--serif);font-size:1.5rem;line-height:1.1}
   .call .btn{color:var(--ink)}

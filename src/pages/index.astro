@@ -50,7 +50,7 @@ const steps = [
         <p class="lede">Maison Null is a design house in Singapore. It designs websites and apps people enjoy using, then builds them so they keep working.</p>
         <div class="btns">
           <a class="btn solid" href={`${base}/contact/`}>Start a project</a>
-          <a class="textlink" href="#samples">See the samples</a>
+          {studio.callLink && <a class="btn" href={studio.callLink} target="_blank" rel="noopener" data-call>Book a 15-minute call</a>}
         </div>
       </div>
     </div>
