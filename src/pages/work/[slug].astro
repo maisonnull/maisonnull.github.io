@@ -32,6 +32,12 @@ const phones = [s.phone, ...s.screens.filter((x) => x.kind === 'phone')];
           <dt>Typefaces</dt><dd>{s.faces.map((f) => f.name).join(', ')}</dd>
         </dl>
       </div>
+      {d.brand && (
+        <div class="concept-note">
+          <p>An unsolicited redesign concept, made by Maison Null to show what the studio can design and build. It is not affiliated with or endorsed by {d.brand}. Names, products and photography belong to {d.brand}.</p>
+          {d.live && <a class="btn" href={d.live} target="_blank" rel="noopener">Open the live concept</a>}
+        </div>
+      )}
     </div>
   </section>
 
@@ -108,6 +114,8 @@ const phones = [s.phone, ...s.screens.filter((x) => x.kind === 'phone')];
   .cs-head h1{font-size:clamp(4rem,13vw,12rem);line-height:.85;letter-spacing:-.03em}
   .cs-intro{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:1.5rem clamp(2rem,5vw,5rem);align-items:end;margin-top:clamp(1.5rem,3vw,2.5rem)}
   .cs-intro .lede{margin:0;max-width:46ch}
+  .concept-note{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:1rem 2rem;margin-top:clamp(1.5rem,3vw,2.2rem);padding:1rem 1.25rem;border:1px solid var(--line);border-radius:12px;font-size:.92rem;color:var(--ink-soft)}
+  .concept-note p{margin:0;max-width:70ch}
   .room{background:var(--tint);border-radius:24px;padding:clamp(1rem,5vw,4.5rem)}
   .room-cap{margin:1rem 0 0;font-size:.92rem;color:var(--ink-soft)}
   .cs-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:2rem clamp(2.5rem,6vw,6rem);align-items:start}

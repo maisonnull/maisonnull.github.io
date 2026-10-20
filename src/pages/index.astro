@@ -8,6 +8,8 @@ import { studio } from '../config';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+const MFW = samples['maison-francis-kurkdjian'].hero.w, MFH = samples['maison-francis-kurkdjian'].hero.h;
+const SLW = samples['song-lang-garden'].phone.w, SLH = samples['song-lang-garden'].phone.h;
 
 const services = [
   {
@@ -56,14 +58,15 @@ const steps = [
     </div>
     <div class="wrap">
       <div class="stage">
-        <Device kind="browser" class="st-main" src="lt-overview" w={2000} h={3209} mode="scroll" eager
-          alt="Lead Time overview: a trend dashboard with a radar of cities around Singapore and four summary cards." />
-        <Device kind="phone" class="st-phone" src="pi-m-home" w={780} h={4288} mode="scroll" eager top="#FAF8F2"
-          alt="Pinch home on a phone: a stack of recipe cards for Sunday pancakes." />
+        <Device kind="browser" class="st-main" src="mf-home" w={MFW} h={MFH} mode="scroll" eager
+          alt="Maison Francis Kurkdjian concept: the red Baccarat Rouge 540 Extrait bottle beside its name in a large serif." />
+        <Device kind="phone" class="st-phone" src="sl-m-home" w={SLW} h={SLH} mode="scroll" eager top="#24452F"
+          alt="Song Lang Garden concept on a phone: a full-bleed photo of the nursery under the headline A Katong nursery for every kind of space." />
       </div>
       <div class="st-caps">
-        <p><a href={`${base}/work/lead-time/`}>Lead Time</a>, a trend dashboard for cafés</p>
-        <p><a href={`${base}/work/pinch/`}>Pinch</a>, a family recipe keeper</p>
+        <p><a href={`${base}/work/maison-francis-kurkdjian/`}>Maison Francis Kurkdjian</a>, a perfume boutique concept</p>
+        <p><a href={`${base}/work/song-lang-garden/`}>Song Lang Garden</a>, a plant nursery concept</p>
+        <p class="st-note">Unsolicited redesigns of real brands, made by the studio. Not affiliated with or endorsed by them.</p>
       </div>
     </div>
   </section>
@@ -72,7 +75,7 @@ const steps = [
   <section class="samples" id="samples">
     <div class="wrap s-head">
       <h2>Selected samples</h2>
-      <p>Two interfaces designed and built in the house. Hover over a screen, or tab to it, to scroll through the whole page.</p>
+      <p>Three unsolicited redesigns of real Singapore favourites, designed and built in the house to show what the studio can do. None is client work. Hover over a screen, or tab to it, to scroll through the whole page.</p>
     </div>
 
     {work.map((p) => {
@@ -88,21 +91,14 @@ const steps = [
                 <dt>Designed for</dt><dd>{p.data.sector}</dd>
               </dl>
               <a class="textlink" href={`${base}/work/${p.id}/`}>Read the case study</a>
+              {p.data.live && <a class="textlink" href={p.data.live} target="_blank" rel="noopener">Open the live concept</a>}
             </div>
           </div>
           <div class="wrap">
-            {p.id === 'pinch' ? (
-              <div class="room room-phones">
-                <Device kind="phone" src={s.phone.src} w={s.phone.w} h={s.phone.h} mode="hover" top={s.top} alt="Pinch home on a phone." />
-                <Device kind="phone" src={s.screens[0].src} w={s.screens[0].w} h={s.screens[0].h} mode="hover" top={s.top} alt="Pinch asking how much milk is a splash, in large type." />
-                <Device kind="phone" src={s.screens[1].src} w={s.screens[1].w} h={s.screens[1].h} mode="hover" top={s.top} alt="A finished Pinch recipe card with handwritten quotes beside each step." />
-              </div>
-            ) : (
-              <div class="room room-split">
-                <Device kind="browser" src={s.screens[0].src} w={s.screens[0].w} h={s.screens[0].h} mode="hover" alt="Lead Time trend radar: a grid of illustrated foods with status chips." />
-                <Device kind="phone" src={s.phone.src} w={s.phone.w} h={s.phone.h} mode="hover" top={s.top} alt="Lead Time overview on a phone." />
-              </div>
-            )}
+            <div class="room room-split">
+              <Device kind="browser" src={s.hero.src} w={s.hero.w} h={s.hero.h} mode="hover" alt={`${p.data.title} concept: ${s.hero.caption}`} />
+              <Device kind="phone" src={s.phone.src} w={s.phone.w} h={s.phone.h} mode="hover" top={s.top} alt={`${p.data.title} concept on a phone: ${s.phone.caption}`} />
+            </div>
             <div class="paint" aria-label={`${p.data.title} colour palette`}>
               {s.palette.map((c) => (
                 <div class="chip">
@@ -212,6 +208,8 @@ const steps = [
   .st-caps{display:flex;justify-content:space-between;gap:1rem 2rem;flex-wrap:wrap;margin-top:clamp(4rem,7vw,5.5rem);font-size:.92rem;color:var(--ink-soft)}
   .st-caps p{margin:0}
   .st-caps a{color:var(--ink)}
+  .st-caps .st-note{flex-basis:100%;font-size:.85rem}
+  .sample-text .textlink + .textlink{margin-left:1.5rem}
   /* one load-in moment */
   .stage{opacity:0;transform:translateY(40px);transition:opacity 1s cubic-bezier(.2,.7,.2,1) .15s,transform 1.2s cubic-bezier(.2,.7,.2,1) .15s}
   .hero.in .stage{opacity:1;transform:none}

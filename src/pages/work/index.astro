@@ -10,7 +10,7 @@ const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.
   <section class="banner">
     <div class="wrap">
       <h1>Samples</h1>
-      <p class="lede">Interfaces designed and built in the house, shown as examples of what can be made for you. Each one comes with its design system and the decision that shaped it.</p>
+      <p class="lede">Unsolicited redesigns of real brands, designed and built in the house as examples of what can be made for you. None is client work, and none is affiliated with the brand it reimagines. Each comes with its design system and the decision that shaped it.</p>
     </div>
   </section>
   <section class="wrap list">
@@ -24,7 +24,7 @@ const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.
           <span class="t-body">
             <span class="t-title">{p.data.title}</span>
             <span class="t-sum">{p.data.summary}</span>
-            <span class="t-meta">{p.data.kind}, for {p.data.sector.toLowerCase()}</span>
+            <span class="t-meta">{p.data.kind}. {p.data.sector}</span>
           </span>
         </a>
       );
