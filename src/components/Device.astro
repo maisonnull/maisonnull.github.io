@@ -49,7 +49,7 @@ const scrolls = mode !== 'still' && extra > 0.05;
   [data-mode="hover"] .screen img{transition:transform 1.4s cubic-bezier(.3,.7,.2,1)}
   [data-mode="hover"] .screen:hover img,
   [data-mode="hover"] .screen:focus-visible img{transform:translateY(calc(-100% + 100cqh));transition:transform var(--dur) cubic-bezier(.45,.05,.4,1)}
-  [data-mode="scroll"] .screen img{transform:translateY(calc((-100% + 100cqh) * var(--t, 0)))}
+  [data-mode="scroll"] .screen img{transform:translateY(var(--y, 0px))}
   figcaption{margin-top:1rem;font-size:.9rem;color:var(--ink-soft);max-width:40ch}
   @media (prefers-reduced-motion:reduce){
     [data-mode] .screen img{transition:none !important;transform:none !important}
