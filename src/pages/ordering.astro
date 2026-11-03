@@ -1,0 +1,100 @@
+---
+import Base from '../layouts/Base.astro';
+import { ordering, founding, orderingFaq } from '../commissions';
+import { studio } from '../config';
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+<Base title="Restaurant ordering" current="commissions" description="Online and table ordering for restaurants in Singapore, with payments into your own account and no commission on any order.">
+  <section class="banner">
+    <div class="wrap">
+      <a class="back" href={`${base}/commissions/`}>All services</a>
+      <h1>Restaurant ordering</h1>
+      <p class="lede">{ordering.summary} One fixed setup fee, one fixed monthly fee per outlet.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <ul class="packs">
+        {ordering.packages.map((p) => (
+          <li class="pack">
+            <h2>{p.name}</h2>
+            <p class="pack-price"><span>{p.setup}</span> setup</p>
+            <p class="pack-monthly">{p.monthly}</p>
+            <p class="pack-sum">{p.summary}</p>
+            <ul class="pack-incl">{p.includes.map((i) => <li>{i}</li>)}</ul>
+          </li>
+        ))}
+      </ul>
+      <ul class="pack-notes">{ordering.notes.map((n) => <li>{n}</li>)}</ul>
+    </div>
+  </section>
+
+  {founding.enabled && (
+    <section class="offer">
+      <div class="wrap offer-inner">
+        <p class="f-tag">Launch offer</p>
+        <div>
+          <h2>{founding.discount} the setup fee for the first {founding.slots} restaurants.</h2>
+          <p>In exchange for a case study of how ordering went once it was live.</p>
+        </div>
+        <a class="btn solid" href={`${base}/contact/`}>Claim a spot</a>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="wrap faq-wrap">
+      <h2>Questions</h2>
+      <div class="faq">
+        {orderingFaq.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section closing">
+    <div class="wrap">
+      <h2>Running a restaurant?</h2>
+      <p class="lede-ink">Tell us how many outlets you have and how you take orders today.</p>
+      <div class="btns">
+        <a class="btn solid" href={`${base}/contact/`}>Start a project</a>
+        {studio.callLink && <a class="btn" href={studio.callLink} target="_blank" rel="noopener">Book a 15-minute call</a>}
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .back{display:inline-block;margin-bottom:1.2rem;color:var(--ink-soft)}
+  .packs{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}
+  .pack{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:1.6rem 1.5rem}
+  .pack h2{font-size:clamp(1.8rem,2.8vw,2.3rem)}
+  .pack-price{margin:.8rem 0 0;color:var(--ink-soft)}
+  .pack-price span{font-weight:600;font-size:1.35rem;color:var(--ink)}
+  .pack-monthly{margin:.2rem 0 0;font-weight:600}
+  .pack-sum{margin:1rem 0 0}
+  .pack-incl{margin:.8rem 0 0;padding-left:1.1rem;color:var(--ink-soft)}
+  .pack-incl li{margin-bottom:.3rem}
+  .pack-notes{margin:2rem 0 0;padding-left:1.1rem;max-width:62ch;color:var(--ink-soft)}
+  .pack-notes li{margin-bottom:.3rem}
+  .offer{background:var(--paper);border-block:1px solid var(--line)}
+  .offer-inner{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:1rem 2.5rem;align-items:center;padding-top:2.2rem;padding-bottom:2.2rem}
+  .f-tag{margin:0;font-weight:600;color:var(--cobalt);white-space:nowrap}
+  .offer h2{font-size:clamp(1.5rem,2.8vw,2rem);margin-bottom:.4rem}
+  .offer p{margin:0;max-width:60ch;color:var(--ink-soft)}
+  .offer .btn{white-space:nowrap}
+  .faq-wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:2rem 4rem}
+  .faq details{border-top:1px solid var(--line)}
+  .faq details:last-child{border-bottom:1px solid var(--line)}
+  .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:1rem;padding:1.1rem 0;font-family:var(--serif);font-size:1.55rem}
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{content:'+';font-family:var(--sans);color:var(--ink-soft);transition:transform .2s}
+  .faq details[open] summary::after{transform:rotate(45deg)}
+  .faq details p{margin:0 0 1.2rem;max-width:62ch;color:var(--ink-soft)}
+  .lede-ink{font-size:1.2rem;color:var(--ink-soft);margin:1rem 0 0}
+  @media (max-width:860px){.packs,.offer-inner,.faq-wrap{grid-template-columns:1fr}}
+</style>

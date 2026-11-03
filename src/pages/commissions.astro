@@ -1,20 +1,25 @@
 ---
 import Base from '../layouts/Base.astro';
-import { commissions, addOns, ordering, founding, included, faq } from '../commissions';
+import { practices, waysToWork, collective, ordering, founding, included, faq } from '../commissions';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const steps = [
-  { name: 'Enquire', text: 'Tell me what you need and when. I reply within two working days.' },
-  { name: 'Scope', text: 'We agree what is being built, the price and the dates, in writing, before any work starts.' },
+  { name: 'Enquire', text: 'Tell us what you need and when. We reply within two working days.' },
+  { name: 'Scope', text: 'We agree what is being made, the price and the dates, in writing, before any work starts.' },
   { name: 'Design', text: 'You see the design first, so it can change before anything is built or printed.' },
   { name: 'Build', text: 'You get a private preview link, or proofs, to check progress as it takes shape.' },
   { name: 'Launch', text: 'It goes live on your domain, or to print, in your name. You own everything, including the source files.' },
 ];
 ---
-<Base title="Services" current="commissions" description="Brand identity, event design, websites, restaurant ordering and apps by Maison Null, with starting prices.">
+<Base title="Services" current="commissions" description="Brand, digital products and restaurant ordering by Maison Null, with starting prices.">
   <section class="banner">
     <div class="wrap">
       <h1>Services and prices</h1>
-      <p class="lede">Every project is designed before anything is built or printed. Prices are starting points in Singapore dollars, and every project is quoted in writing before work begins.</p>
+      <p class="lede">Three practices, one studio. Every project is designed before anything is built or printed, and quoted in writing, in Singapore dollars, before work begins.</p>
+      <ul class="index">
+        {practices.map((p) => (
+          <li><a href={p.link ? `${base}${p.link}` : `#${p.id}`}><span class="ix-n">{p.name}</span><span class="ix-p">{p.price}</span></a></li>
+        ))}
+      </ul>
     </div>
   </section>
 
@@ -31,58 +36,75 @@ const steps = [
     </section>
   )}
 
-  <section class="section">
-    <div class="wrap">
-      <ul class="board">
-        {commissions.map((c) => (
-          <li class="item">
-            <div class="item-head">
-              <h2>{c.name}</h2>
-              <span class="dots" aria-hidden="true"></span>
-              <span class="price">{c.price}</span>
-            </div>
-            <p class="sum">{c.summary}</p>
-            <ul class="incl">{c.includes.map((i) => <li>{i}</li>)}</ul>
-            <p class="time">{c.time}</p>
-          </li>
-        ))}
-      </ul>
+  {practices.filter((p) => p.tiers.length).map((p) => (
+    <section class="section practice" id={p.id}>
+      <div class="wrap pr-grid">
+        <div class="pr-head">
+          <h2>{p.name}</h2>
+          <p class="pr-sum">{p.summary}</p>
+        </div>
+        <ul class="board">
+          {p.tiers.map((c) => (
+            <li class="item">
+              <div class="item-head">
+                <h3>{c.name}</h3>
+                <span class="dots" aria-hidden="true"></span>
+                <span class="price">{c.price}</span>
+              </div>
+              <p class="sum">{c.summary}</p>
+              <ul class="incl">{c.includes.map((i) => <li>{i}</li>)}</ul>
+              {c.time && <p class="time">{c.time}</p>}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  ))}
 
-      <h2 class="sub">On the side</h2>
-      <ul class="board small">
-        {addOns.map((a) => (
-          <li class="item">
-            <div class="item-head">
-              <h3>{a.name}</h3>
-              <span class="dots" aria-hidden="true"></span>
-              <span class="price">{a.price}</span>
-            </div>
-            <p class="sum">{a.summary}</p>
-          </li>
+  <section class="section practice" id="ordering">
+    <div class="wrap pr-grid">
+      <div class="pr-head">
+        <h2>Restaurant ordering</h2>
+        <p class="pr-sum">{ordering.summary}</p>
+      </div>
+      <div>
+        <ul class="board">
+          {ordering.packages.map((k) => (
+            <li class="item">
+              <div class="item-head">
+                <h3>{k.name}</h3>
+                <span class="dots" aria-hidden="true"></span>
+                <span class="price">{k.setup} + {k.monthly.replace(' per outlet', '')}</span>
+              </div>
+              <p class="sum">{k.summary}</p>
+            </li>
+          ))}
+        </ul>
+        <a class="btn" href={`${base}/ordering/`}>See what each package includes</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section ways">
+    <div class="wrap">
+      <h2>Ways to work</h2>
+      <ul class="ways-grid">
+        {waysToWork.map((w) => (
+          <li><h3>{w.name}</h3><p class="w-price">{w.price}</p><p>{w.summary}</p></li>
         ))}
       </ul>
     </div>
   </section>
 
-  <section class="section ordering" id="ordering">
-    <div class="wrap">
-      <h2>Restaurant ordering</h2>
-      <p class="lede-ink">{ordering.summary}</p>
-      <ul class="packs">
-        {ordering.packages.map((p) => (
-          <li class="pack">
-            <h3>{p.name}</h3>
-            <p class="pack-price"><span>{p.setup}</span> setup</p>
-            <p class="pack-monthly">{p.monthly}</p>
-            <p class="sum">{p.summary}</p>
-            <ul class="pack-incl">{p.includes.map((i) => <li>{i}</li>)}</ul>
-          </li>
-        ))}
-      </ul>
-      <ul class="pack-notes">{ordering.notes.map((n) => <li>{n}</li>)}</ul>
-      {founding.enabled && (
-        <p class="pack-offer">Launch offer: {founding.discount} the setup fee for the first {founding.slots} restaurants, in exchange for a case study. <a href={`${base}/contact/`}>Claim a spot</a></p>
-      )}
+  <section class="section">
+    <div class="wrap pr-grid">
+      <div class="pr-head">
+        <h2>Who does the work</h2>
+        <p class="pr-sum">{collective.lede}</p>
+      </div>
+      <dl class="roles">
+        {collective.roles.map((r) => (<div><dt>{r.name}</dt><dd>{r.text}</dd></div>))}
+      </dl>
     </div>
   </section>
 
@@ -160,28 +182,34 @@ const steps = [
   .incl{margin:.9rem 0 0;padding-left:1.1rem;color:var(--ink-soft);columns:2;column-gap:2.5rem}
   .incl li{break-inside:avoid;margin-bottom:.3rem}
   .time{margin:.9rem 0 0;font-size:.95rem;color:var(--ink-soft)}
-  .sub{font-size:clamp(1.6rem,3vw,2.1rem);margin:4rem 0 1.2rem}
-  .small .item-head h3{font-size:1.5rem}
+  .index{list-style:none;margin:clamp(1.8rem,4vw,2.6rem) 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .index a{display:flex;flex-direction:column;gap:.3rem;padding:1.1rem 1.25rem;background:var(--wall);text-decoration:none;height:100%}
+  .index a:hover{background:var(--paper)}
+  .ix-n{font-family:var(--serif);font-size:1.6rem;line-height:1.1}
+  .ix-p{color:var(--ink-soft);font-size:.95rem}
+  .practice{scroll-margin-top:4.5rem;border-top:1px solid var(--line)}
+  .pr-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:2rem clamp(2.5rem,5vw,5rem)}
+  .pr-head h2{font-size:clamp(2.4rem,4.5vw,3.6rem)}
+  .pr-sum{margin:1rem 0 0;color:var(--ink-soft);max-width:34ch}
+  .item-head h3{font-size:clamp(1.7rem,3vw,2.2rem)}
+  .practice .btn{margin-top:1.6rem}
+  .ways{background:var(--paper);border-block:1px solid var(--line)}
+  .ways-grid{list-style:none;margin:2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem clamp(2rem,4vw,3rem)}
+  .ways-grid li{border-top:1px solid var(--ink);padding-top:1rem}
+  .ways-grid h3{font-size:1.6rem}
+  .w-price{margin:.3rem 0 .6rem;font-weight:600}
+  .ways-grid p:last-child{margin:0;color:var(--ink-soft)}
+  .roles{margin:0;display:grid;gap:0}
+  .roles div{border-top:1px solid var(--line);padding:1rem 0}
+  .roles div:first-child{border-top-color:var(--ink)}
+  .roles dt{font-family:var(--serif);font-size:1.6rem;margin-bottom:.25rem}
+  .roles dd{margin:0;color:var(--ink-soft)}
   .steps{list-style:none;counter-reset:s;margin:2.2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:2rem}
   .steps li{counter-increment:s;border-top:1px solid var(--ink);padding-top:1rem}
   .steps li::before{content:counter(s);font-family:var(--serif);font-size:2.6rem;line-height:1;display:block;margin-bottom:.6rem;color:var(--cobalt)}
   .steps h3{font-size:1.3rem;margin-bottom:.4rem}
   .steps p{margin:0;color:var(--ink-soft)}
-  .ordering{background:var(--paper);border-block:1px solid var(--line);scroll-margin-top:4.5rem}
-  .packs{list-style:none;margin:2.2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}
-  .pack{background:var(--wall);border:1px solid var(--line);border-radius:14px;padding:1.6rem 1.5rem}
-  .pack h3{font-size:clamp(1.7rem,2.6vw,2.1rem)}
-  .pack-price{margin:.8rem 0 0;color:var(--ink-soft)}
-  .pack-price span{font-weight:600;font-size:1.35rem;color:var(--ink)}
-  .pack-monthly{margin:.2rem 0 0;font-weight:600}
-  .pack .sum{font-size:1rem;margin-top:1rem}
-  .pack-incl{margin:.8rem 0 0;padding-left:1.1rem;color:var(--ink-soft)}
-  .pack-incl li{margin-bottom:.3rem}
-  .pack-notes{margin:2rem 0 0;padding-left:1.1rem;max-width:62ch;color:var(--ink-soft)}
-  .pack-notes li{margin-bottom:.3rem}
-  .pack-offer{margin:1.4rem 0 0;font-weight:600}
-  .pack-offer a{color:var(--cobalt)}
-  @media (max-width:860px){.founding-inner,.faq-wrap{grid-template-columns:1fr}}
-  @media (max-width:860px){.steps{grid-template-columns:1fr 1fr}.incl{columns:1}.packs{grid-template-columns:1fr}}
+  @media (max-width:860px){.founding-inner,.faq-wrap,.pr-grid,.index,.ways-grid{grid-template-columns:minmax(0,1fr)}.price{white-space:normal}}
+  @media (max-width:860px){.steps{grid-template-columns:1fr 1fr}.incl{columns:1}}
   @media (max-width:520px){.steps{grid-template-columns:1fr}.item-head{grid-template-columns:1fr}.dots{display:none}}
 </style>

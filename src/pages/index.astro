@@ -5,44 +5,12 @@ import Device from '../components/Device.astro';
 import { getCollection } from 'astro:content';
 import { samples } from '../data/samples';
 import { studio } from '../config';
+import { practices, collective } from '../commissions';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
 const BT = samples['born-to-route'].screens.find((x) => x.src === 'bt-landing')!;
 const SLW = samples['song-lang-garden'].phone.w, SLH = samples['song-lang-garden'].phone.h;
-
-const services = [
-  {
-    name: 'Interface design',
-    text: 'Dashboards, apps and tools that make a complicated job feel simple.',
-    items: ['Screens for desktop and phone', 'A design system: colour, type and components', 'A prototype you can click through'],
-  },
-  {
-    name: 'Websites',
-    text: 'Sites for businesses that want to look as good as their work.',
-    items: ['Landing pages and full sites', 'Words edited for clarity', 'Live on your own domain'],
-  },
-  {
-    name: 'Restaurant ordering',
-    text: 'Online and table ordering for restaurants, with no commission taken on orders.',
-    items: ['Pickup, delivery and dine-in QR ordering', 'Payments into your own account', 'An owner dashboard for every outlet'],
-  },
-  {
-    name: 'Brand identity',
-    text: 'A mark, type, colour and voice that hold together wherever they appear.',
-    items: ['Logo and wordmark', 'Colour, typefaces and image direction', 'A brand guide and starter templates'],
-  },
-  {
-    name: 'Event design',
-    text: 'One look for a launch, conference or dinner, from the invitation to the stage.',
-    items: ['Key visual and invitations', 'Signage, backdrops and badges, ready to print', 'Social posts and speaker slides'],
-  },
-  {
-    name: 'Design and build',
-    text: 'The design, built and launched, with AI only where it genuinely helps.',
-    items: ['Web apps with sign-ins and payments', 'AI features that are checked, not trusted blindly', 'Hosting and care after launch'],
-  },
-];
 
 const backOfHouse = [
   { name: 'Built by the same hands', text: 'Nothing gets lost between the mockup and the live site, because the person who designed it builds it.' },
@@ -64,7 +32,7 @@ const steps = [
     <div class="wrap hero-top">
       <h1>Interfaces worth using,<br class="br" /> built properly underneath.</h1>
       <div class="hero-side">
-        <p class="lede">Maison Null is a design house in Singapore. It designs brands, events, websites and apps people enjoy using, and builds the digital ones so they keep working.</p>
+        <p class="lede">Maison Null is a design house in Singapore. It designs brands and builds the digital products behind them, and calls on a collective of specialists when a project needs more.</p>
         <div class="btns">
           <a class="btn solid" href={`${base}/contact/`}>Start a project</a>
           {studio.callLink && <a class="btn" href={studio.callLink} target="_blank" rel="noopener" data-call>Book a 15-minute call</a>}
@@ -136,17 +104,23 @@ const steps = [
   <section class="services">
     <div class="wrap">
       <div class="sv-head">
-        <h2>What the studio designs</h2>
+        <h2>What we do</h2>
         <a class="textlink" href={`${base}/commissions/`}>Services and prices</a>
       </div>
       <div class="sv-grid">
-        {services.map((s) => (
-          <div class="sv">
-            <h3>{s.name}</h3>
-            <p>{s.text}</p>
-            <ul>{s.items.map((i) => <li>{i}</li>)}</ul>
-          </div>
+        {practices.map((p) => (
+          <a class="sv" href={p.link ? `${base}${p.link}` : `${base}/commissions/#${p.id}`}>
+            <h3>{p.name}</h3>
+            <p>{p.summary}</p>
+            <ul>{p.items.map((i) => <li>{i}</li>)}</ul>
+            <p class="sv-price">{p.price}</p>
+          </a>
         ))}
+      </div>
+      <div class="coll">
+        <h3>One lead, and a collective behind it</h3>
+        <p>{collective.lede}</p>
+        <ul>{collective.roles.map((r) => <li><b>{r.name}.</b> {r.text}</li>)}</ul>
       </div>
     </div>
   </section>
@@ -286,7 +260,15 @@ const steps = [
   .services{padding:clamp(4rem,9vw,7rem) 0;background:var(--paper);border-block:1px solid var(--line)}
   .sv-head{display:flex;justify-content:space-between;align-items:baseline;gap:1rem 2rem;flex-wrap:wrap;margin-bottom:clamp(2.2rem,4vw,3.2rem)}
   .sv-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.5rem clamp(2rem,4vw,3.5rem)}
-  .sv{border-top:1px solid var(--ink);padding-top:1.2rem}
+  .sv{display:block;border-top:1px solid var(--ink);padding-top:1.2rem;text-decoration:none;color:inherit}
+  .sv:hover h3{text-decoration:underline;text-decoration-thickness:2px;text-decoration-color:var(--cobalt)}
+  .sv-price{margin:1rem 0 0 !important;font-weight:600}
+  .coll{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:1rem clamp(2rem,5vw,5rem);margin-top:clamp(3rem,6vw,4.5rem);padding-top:clamp(2rem,4vw,3rem);border-top:1px solid var(--line)}
+  .coll h3{font-size:clamp(1.9rem,3vw,2.5rem);grid-row:span 2}
+  .coll p{margin:0;color:var(--ink-soft);max-width:60ch}
+  .coll ul{margin:0;padding:0;list-style:none}
+  .coll li{padding:.6rem 0;border-top:1px solid var(--line);color:var(--ink-soft)}
+  .coll li b{color:var(--ink);font-weight:600}
   .sv h3{font-size:clamp(2rem,3vw,2.6rem);margin-bottom:.7rem}
   .sv p{margin:0 0 1.1rem;max-width:34ch}
   .sv ul{margin:0;padding:0;list-style:none;color:var(--ink-soft);font-size:.95rem}
@@ -319,7 +301,8 @@ const steps = [
   /* ---------- responsive ---------- */
   @media (max-width:960px){
     .s-head,.sample-head,.boh-grid,.closing-grid{grid-template-columns:1fr}
-    .sv-grid{grid-template-columns:1fr}
+    .sv-grid,.coll{grid-template-columns:1fr}
+    .coll h3{grid-row:auto}
     .steps{grid-template-columns:1fr 1fr}
     .paint{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:1rem}
   }

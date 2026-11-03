@@ -1,72 +1,125 @@
-// Edit prices and wording here. The home page and the Commissions page both read from this file.
-export const commissions = [
+// Edit prices and wording here. The home page, the Services page and the Ordering page read from this file.
+// The studio works in three practices. Each has a starting price and the tiers under it.
+export type Tier = { name: string; price: string; time?: string; summary: string; includes: string[] };
+export type Practice = { id: string; name: string; price: string; summary: string; items: string[]; tiers: Tier[]; link?: string };
+
+export const practices: Practice[] = [
   {
-    name: 'Landing page',
+    id: 'brand',
+    name: 'Brand',
+    price: 'from S$2,400',
+    summary: 'Identity and events: a mark, type, colour and voice, carried from the business card to the stage.',
+    items: ['Brand identity', 'Event design', 'Print-ready files for every piece'],
+    tiers: [
+      {
+        name: 'Brand identity',
+        price: 'from S$3,800',
+        time: 'Three to four weeks',
+        summary: 'A name in type, a mark, colour and a voice, set down so anyone can use them consistently.',
+        includes: [
+          'Logo and wordmark, with versions for small and large sizes',
+          'Colour, typefaces and image direction',
+          'A short brand guide your team can follow',
+          'Starter templates: social posts, slides and a business card',
+        ],
+      },
+      {
+        name: 'Event design',
+        price: 'from S$2,400',
+        time: 'About two weeks',
+        summary: 'One look for a launch, conference or dinner, carried from the invitation to the stage.',
+        includes: [
+          'A key visual and the system around it',
+          'Invitations, email and a set of social posts',
+          'Print-ready signage, backdrop, banners and name badges',
+          'A slide template for speakers',
+        ],
+      },
+    ],
+  },
+  {
+    id: 'digital',
+    name: 'Digital products',
     price: 'from S$880',
-    time: 'About a week',
-    summary: 'One page for a launch, an event or a new idea.',
-    includes: [
-      'Designed for phones first, fast everywhere',
-      'Contact or sign-up form',
-      'Your own domain, set up and connected',
-      'Search basics: titles, descriptions, link previews',
+    summary: 'Websites, apps and tools, designed and built by the same hands.',
+    items: ['Websites and landing pages', 'Web apps, dashboards and internal tools', 'Web3 and finance products'],
+    tiers: [
+      {
+        name: 'Landing page',
+        price: 'from S$880',
+        time: 'About a week',
+        summary: 'One page for a launch, an event or a new idea.',
+        includes: [
+          'Designed for phones first, fast everywhere',
+          'Contact or sign-up form',
+          'Your own domain, set up and connected',
+          'Search basics: titles, descriptions, link previews',
+        ],
+      },
+      {
+        name: 'Full site',
+        price: 'from S$2,400',
+        time: 'Two to three weeks',
+        summary: 'Up to five pages for a business that needs room for its story, work and services.',
+        includes: [
+          'Home, about, services, work and contact',
+          'Edit your own content in simple text files',
+          'Privacy-friendly analytics',
+          'Optional copy edit (S$350) and monthly care (S$150 a month)',
+        ],
+      },
+      {
+        name: 'App launch',
+        price: 'from S$4,800',
+        time: 'Four weeks or more',
+        summary: 'An interactive tool or web app with a database, sign-ins or payments.',
+        includes: [
+          'Database and sign-ins',
+          'Payments through a hosted checkout, so card details never touch your site',
+          'Usage tracking and a launch checklist',
+          'Optional monthly care: small edits, updates and uptime checks (S$150 a month)',
+        ],
+      },
+      {
+        name: 'Web3 and finance',
+        price: 'Quoted after a call',
+        summary: 'Products that touch wallets or money, led together with a specialist from the collective.',
+        includes: [
+          'Wallet sign-in and smart-contract front ends',
+          'Dashboards that make on-chain data readable',
+          'Payments, reporting and money dashboards',
+          'Built with the rules around money in mind',
+        ],
+      },
     ],
   },
   {
-    name: 'Full site',
-    price: 'from S$2,400',
-    time: 'Two to three weeks',
-    summary: 'Up to five pages for a business that needs room for its story, work and services.',
-    includes: [
-      'Home, about, services, work and contact',
-      'Edit your own content in simple text files',
-      'Privacy-friendly analytics',
-      'Domain and hosting set up in your name',
-    ],
-  },
-  {
-    name: 'App launch',
-    price: 'from S$4,800',
-    time: 'Four weeks or more',
-    summary: 'An interactive tool or web app with a database, sign-ins or payments.',
-    includes: [
-      'Scope agreed in writing before work starts',
-      'Database and sign-ins',
-      'Payments through a hosted checkout, so card details never touch your site',
-      'Usage tracking and a launch checklist',
-    ],
-  },
-  {
-    name: 'Brand identity',
-    price: 'from S$3,800',
-    time: 'Three to four weeks',
-    summary: 'A name in type, a mark, colour and a voice, set down so anyone can use them consistently.',
-    includes: [
-      'Logo and wordmark, with versions for small and large sizes',
-      'Colour, typefaces and image direction',
-      'A short brand guide your team can follow',
-      'Starter templates: social posts, slides and a business card',
-    ],
-  },
-  {
-    name: 'Event design',
-    price: 'from S$2,400',
-    time: 'About two weeks',
-    summary: 'One look for a launch, conference or dinner, carried from the invitation to the stage.',
-    includes: [
-      'A key visual and the system around it',
-      'Invitations, email and a set of social posts',
-      'Print-ready signage, backdrop, banners and name badges',
-      'A slide template for speakers',
-    ],
+    id: 'ordering',
+    name: 'Restaurant ordering',
+    price: 'from S$3,800 + S$129 a month',
+    summary: "Online and table ordering on the studio's own platform, with no commission on any order.",
+    items: ['Pickup, delivery and table QR ordering', 'Payments into your own account', 'An owner dashboard for every outlet'],
+    tiers: [],
+    link: '/ordering/',
   },
 ];
 
-export const addOns = [
-  { name: 'Monthly care', price: 'S$150 a month', summary: 'Small edits, updates and uptime checks.' },
-  { name: 'Copy edit', price: 'S$350', summary: 'Clearer, sharper words for your pages.' },
-  { name: 'Contract design', price: 'from S$1,000 a day', summary: 'Brand, events or digital design alongside your in-house team, by the day or week.' },
+// Ways to work, whatever the practice.
+export const waysToWork = [
+  { name: 'A fixed-price project', price: 'Quoted in writing', summary: 'Scope, price and dates agreed before work starts. The usual way.' },
+  { name: 'By the day', price: 'from S$1,000 a day', summary: 'A designer inside your team for brand, event or digital work, by the day or week.' },
+  { name: 'For agencies', price: 'Quoted per project', summary: "White-label design and build under your agency's name, or extra hands on a deadline." },
 ];
+
+// The collective: specialists called in when a project needs them. Roles only, no names.
+export const collective = {
+  lede: "Most projects are designed and built by the studio's lead, from the first sketch to launch, so nothing gets lost between design and build. When a project needs deeper expertise, specialists from the collective join it. Either way, you deal with one lead, sign one contract at a fixed price and pay one invoice.",
+  roles: [
+    { name: 'Web3', text: 'On-chain products, wallet sign-in and smart-contract front ends.' },
+    { name: 'Finance', text: 'Products that handle money: payments, reporting and dashboards.' },
+    { name: 'Agency partnerships', text: 'White-label work for agencies, and extra hands on a deadline.' },
+  ],
+};
 
 // Restaurant ordering: one platform, set up for each restaurant. Prices are per outlet,
 // and no package takes a commission on orders.
@@ -141,35 +194,55 @@ export const faq = [
     a: 'A landing page takes about a week, event design about two weeks, a full site two to three weeks, and an app, ordering system or brand identity four weeks or more. The exact dates go in the written scope before anything starts.',
   },
   {
-    q: 'Do I own the site?',
-    a: 'Yes. The domain, hosting and code are all in your name. If you ever want someone else to work on it, you hand them the keys.',
+    q: 'Do I own the work?',
+    a: 'Yes. The domain, hosting, code and source files are all in your name. If you ever want someone else to work on it, you hand them the keys.',
   },
   {
     q: 'What will hosting cost me?',
-    a: 'Small sites can often be hosted free or for a few dollars a month, plus your domain, which is usually tens of dollars a year. I recommend a host that fits and set it up under your account.',
+    a: 'Small sites can often be hosted free or for a few dollars a month, plus your domain, which is usually tens of dollars a year. We recommend a host that fits and set it up under your account.',
   },
   {
     q: 'Can I update it myself?',
-    a: 'Yes. Text, prices and photos live in simple files, and the handover guide shows you how. For anything bigger, there is the Monthly care add-on.',
+    a: 'Yes. Text, prices and photos live in simple files, and the handover guide shows you how. For anything bigger, there is monthly care.',
   },
   {
     q: 'What do you need from me?',
-    a: 'Your words, your logo if you have one, any photos, and someone who can answer questions within a day or two. If the words are the hard part, the Copy edit add-on helps.',
-  },
-  {
-    q: 'Do you take a cut of restaurant orders?',
-    a: 'No. Payments go straight from your customers into your own HitPay or Stripe account, and you pay only their card and PayNow fees. The studio charges a fixed setup fee and a fixed monthly fee, never a commission.',
+    a: 'Your words, your logo if you have one, any photos, and someone who can answer questions within a day or two. If the words are the hard part, a copy edit helps.',
   },
   {
     q: 'Do you design for print and events, not just screens?',
     a: 'Yes. Brand identities and event designs come with print-ready files for signage, backdrops, banners and invitations, and the studio can work with your printer or venue.',
   },
   {
-    q: 'Can you work inside our team on a contract?',
-    a: 'Yes. Contract design is booked by the day or week for brand, event or digital work, alongside your own designers and marketers.',
+    q: 'Who works on my project?',
+    a: "The studio's lead designs and builds most projects from start to finish. When one needs web3, finance or agency expertise, a specialist from the collective joins it. You still deal with one lead, one contract and one invoice.",
+  },
+  {
+    q: 'Can you work inside our team?',
+    a: 'Yes. A designer can be booked by the day or week for brand, event or digital work, alongside your own designers and marketers. Agencies can also hire the studio white-label.',
   },
   {
     q: 'How does payment work?',
+    a: 'Half when the scope is agreed, half at launch, by bank transfer or PayNow.',
+  },
+];
+
+// Questions for the Ordering page.
+export const orderingFaq = [
+  {
+    q: 'Do you take a cut of orders?',
+    a: 'No. Payments go straight from your customers into your own HitPay or Stripe account, and you pay only their card and PayNow fees. The studio charges a fixed setup fee and a fixed monthly fee, never a commission.',
+  },
+  {
+    q: 'Is it built from scratch for each restaurant?',
+    a: 'No. Every restaurant runs on the same ordering platform, set up with its own menu, outlets, look and payment account. That keeps it reliable and the monthly fee fixed.',
+  },
+  {
+    q: 'Who owns the customer data?',
+    a: 'You do. Orders and customer details belong to the restaurant, with a privacy notice, marketing consent and deletion on request handled in line with the PDPA.',
+  },
+  {
+    q: 'How does payment for the setup work?',
     a: 'Half when the scope is agreed, half at launch, by bank transfer or PayNow.',
   },
 ];
