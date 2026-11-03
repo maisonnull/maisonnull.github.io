@@ -1,5 +1,5 @@
 // Design samples: the real screens, palettes and typefaces of each piece.
-// All three are unsolicited redesign concepts, not client work.
+// Born to Route is a planning tool built by the studio; the other two are unsolicited redesign concepts. None is client work.
 // Images live in /public/samples as WebP. w/h are their pixel sizes.
 export type Screen = { src: string; w: number; h: number; kind: 'browser' | 'phone'; caption: string };
 export type Swatch = { name: string; hex: string; role: string; dark?: boolean };
@@ -16,33 +16,32 @@ export const samples: Record<string, {
   faces: Face[];
   build: string[];       // back of house: how it is made, kept short
 }> = {
-  'maison-francis-kurkdjian': {
-    tint: '#EFE6DC',
-    top: '#FAF8F5',
-    fonts: 'family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;1,6..96,400&family=Jost:wght@400;500',
-    hero: { src: 'mf-home', w: 2000, h: 10000, kind: 'browser', caption: "Home. The Extrait key visual, then the scent told as three auras." },
-    phone: { src: 'mf-m-home', w: 780, h: 6000, kind: 'phone', caption: "The same story on a phone, one aura per screen." },
+  'born-to-route': {
+    tint: '#DDE3E8',
+    top: '#0B1422',
+    fonts: 'family=Inter:wght@400;600;700',
+    hero: { src: 'bt-home', w: 2000, h: 1759, kind: 'browser', caption: "The planner. The optimised plan's cost, facilities and trips, the network on a map, and where the money goes." },
+    phone: { src: 'bt-m-landing', w: 780, h: 6464, kind: 'phone', caption: "The landing on a phone: the network over Kalimantan at night, then the plan told in plain numbers." },
     screens: [
-      { src: 'mf-collection', w: 2000, h: 8481, kind: 'browser', caption: "The collection, hung like portraits on tones from each fragrance family." },
-      { src: 'mf-m-product', w: 780, h: 6000, kind: 'phone', caption: "The product page on a phone: notes, sizes and engraving." },
-      { src: 'mf-m-finder', w: 780, h: 4876, kind: 'phone', caption: "A scent finder that asks how you want to feel, not what you know." },
+      { src: 'bt-landing', w: 2000, h: 1250, kind: 'browser', caption: "The landing: the whole supply chain over a night map of Kalimantan, with every shipping route listed." },
+      { src: 'bt-sandbox', w: 2000, h: 1482, kind: 'browser', caption: "Scenario sandbox: switch on a flood, a new airport or new transport rates, and re-optimise." },
+      { src: 'bt-report', w: 2000, h: 1825, kind: 'browser', caption: "A one-page plan report, ready to print or save as PDF." },
     ],
     palette: [
-      { name: "Porcelain", hex: '#FAF8F5', role: "Page background" },
-      { name: "Porcelain deep", hex: '#F0ECE6', role: "Panels and the gallery wall" },
-      { name: "Ink", hex: '#1A1414', role: "Text", dark: true },
-      { name: "Crimson", hex: '#8E1B22', role: "The scent itself, and nothing else", dark: true },
-      { name: "Amber", hex: '#C9894B', role: "Light and warmth in imagery" },
-      { name: "Smoke", hex: '#6B645F', role: "Secondary text", dark: true },
+      { name: "Night", hex: '#0B1422', role: "The landing map and its panels", dark: true },
+      { name: "Page", hex: '#F3F3F1', role: "Planner background" },
+      { name: "Ink", hex: '#111111', role: "Text and figures", dark: true },
+      { name: "Signal", hex: '#EB6834', role: "The one action, and depot-to-refinery routes", dark: true },
+      { name: "Farm leg", hex: '#2A78D6', role: "Farm-to-depot routes", dark: true },
+      { name: "Airport leg", hex: '#1BAF7A', role: "Refinery-to-airport routes", dark: true },
     ],
     faces: [
-      { name: "Bodoni Moda", role: "Names and headlines, cut like crystal", css: "'Bodoni Moda', Didot, Georgia, serif", sample: "Baccarat Rouge 540", size: '2.6rem' },
-      { name: "Jost", role: "Notes, prices and navigation", css: "'Jost', 'Helvetica Neue', sans-serif", sample: "Saffron, Grandiflorum Jasmine, Ambroxan, Cashmeran. 70ml, S$635.", size: '1.2rem' },
+      { name: "Inter", role: "Everything, with tabular figures for the numbers", css: "'Inter', system-ui, sans-serif", sample: "$742 per tonne of SAF delivered", size: '2.2rem' },
     ],
     build: [
-      "A React site built with Vite, deployed as a static site to Cloudflare Pages.",
-      "Prices, notes and bottle images come from one data file collected from the house's own site, with the date it was checked.",
-      "Every image is resized into WebP sizes under 350KB, and motion uses only transform and opacity, with a reduced-motion fallback.",
+      "A React app built with Vite, served from Google Cloud Run.",
+      "The plan comes from a mixed-integer optimiser (PuLP with the HiGHS solver), so the cost shown is the proven lowest for the inputs, not an estimate.",
+      "Maps are drawn with MapLibre and deck.gl on open map tiles, and every route, facility and number on screen comes from the same solved plan.",
     ],
   },
   'supergreen': {

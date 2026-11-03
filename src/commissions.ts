@@ -37,18 +37,6 @@ export const commissions = [
     ],
   },
   {
-    name: 'Restaurant ordering',
-    price: 'from S$3,800 + S$129 a month',
-    time: 'Three to four weeks',
-    summary: 'A landing page, online ordering and table QR ordering, with payments straight to your own account and no commission on orders.',
-    includes: [
-      'Pickup and delivery orders online, dine-in orders by table QR code',
-      'PayNow and cards through your own HitPay or Stripe account',
-      'A menu you edit yourself, with a kitchen screen for new orders',
-      'An owner dashboard: sales by hour, item, channel and outlet, and repeat customers',
-    ],
-  },
-  {
     name: 'Brand identity',
     price: 'from S$3,800',
     time: 'Three to four weeks',
@@ -78,8 +66,55 @@ export const addOns = [
   { name: 'Monthly care', price: 'S$150 a month', summary: 'Small edits, updates and uptime checks.' },
   { name: 'Copy edit', price: 'S$350', summary: 'Clearer, sharper words for your pages.' },
   { name: 'Contract design', price: 'from S$1,000 a day', summary: 'Brand, events or digital design alongside your in-house team, by the day or week.' },
-  { name: 'Ordering, multiple outlets', price: 'S$199 a month per outlet', summary: 'Table QR ordering and the full dashboard for each extra outlet. Groups of three or more are quoted.' },
 ];
+
+// Restaurant ordering: one platform, set up for each restaurant. Prices are per outlet,
+// and no package takes a commission on orders.
+export const ordering = {
+  summary: 'Online and table ordering for restaurants, with payments going straight into your own account and no commission on any order.',
+  packages: [
+    {
+      name: 'Order Online',
+      setup: 'S$3,800',
+      monthly: 'S$129 a month per outlet',
+      summary: 'Your own ordering site for pickup and delivery.',
+      includes: [
+        'A landing page for the restaurant',
+        'Pickup and delivery orders online',
+        'PayNow and cards through your own HitPay or Stripe account',
+        'A menu you edit yourself',
+        'An owner dashboard: sales by hour, day, item and channel, and repeat customers',
+      ],
+    },
+    {
+      name: 'Dine-in + Online',
+      setup: 'S$6,800',
+      monthly: 'S$199 a month per outlet',
+      summary: 'Everything in Order Online, plus ordering at the table.',
+      includes: [
+        'Table QR ordering: guests order and pay from their seat',
+        'A kitchen screen that shows new orders as they arrive',
+        'Sales by table and by outlet on the dashboard',
+      ],
+    },
+    {
+      name: 'Group',
+      setup: 'from S$12,000',
+      monthly: 'S$349 a month, plus S$99 per extra outlet',
+      summary: 'Everything in Dine-in + Online, for restaurants with several outlets.',
+      includes: [
+        'A loyalty programme',
+        'Sync with your POS and delivery apps',
+        'One dashboard across every outlet',
+      ],
+    },
+  ],
+  notes: [
+    'No commission on any package. You pay only HitPay or Stripe card and PayNow fees, straight to them.',
+    'The studio never holds your money: payments settle directly into your own account.',
+    'Privacy handled: a privacy notice, marketing consent and data deletion on request, in line with the PDPA.',
+  ],
+};
 
 // Founding commissions: a launch offer for the first few clients, in exchange for
 // permission to show the work. Set enabled to false to hide it everywhere.

@@ -1,6 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
-import { commissions, addOns, founding, included, faq } from '../commissions';
+import { commissions, addOns, ordering, founding, included, faq } from '../commissions';
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const steps = [
   { name: 'Enquire', text: 'Tell me what you need and when. I reply within two working days.' },
@@ -61,6 +61,28 @@ const steps = [
           </li>
         ))}
       </ul>
+    </div>
+  </section>
+
+  <section class="section ordering" id="ordering">
+    <div class="wrap">
+      <h2>Restaurant ordering</h2>
+      <p class="lede-ink">{ordering.summary}</p>
+      <ul class="packs">
+        {ordering.packages.map((p) => (
+          <li class="pack">
+            <h3>{p.name}</h3>
+            <p class="pack-price"><span>{p.setup}</span> setup</p>
+            <p class="pack-monthly">{p.monthly}</p>
+            <p class="sum">{p.summary}</p>
+            <ul class="pack-incl">{p.includes.map((i) => <li>{i}</li>)}</ul>
+          </li>
+        ))}
+      </ul>
+      <ul class="pack-notes">{ordering.notes.map((n) => <li>{n}</li>)}</ul>
+      {founding.enabled && (
+        <p class="pack-offer">Launch offer: {founding.discount} the setup fee for the first {founding.slots} restaurants, in exchange for a case study. <a href={`${base}/contact/`}>Claim a spot</a></p>
+      )}
     </div>
   </section>
 
@@ -145,7 +167,21 @@ const steps = [
   .steps li::before{content:counter(s);font-family:var(--serif);font-size:2.6rem;line-height:1;display:block;margin-bottom:.6rem;color:var(--cobalt)}
   .steps h3{font-size:1.3rem;margin-bottom:.4rem}
   .steps p{margin:0;color:var(--ink-soft)}
+  .ordering{background:var(--paper);border-block:1px solid var(--line);scroll-margin-top:4.5rem}
+  .packs{list-style:none;margin:2.2rem 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.5rem}
+  .pack{background:var(--wall);border:1px solid var(--line);border-radius:14px;padding:1.6rem 1.5rem}
+  .pack h3{font-size:clamp(1.7rem,2.6vw,2.1rem)}
+  .pack-price{margin:.8rem 0 0;color:var(--ink-soft)}
+  .pack-price span{font-weight:600;font-size:1.35rem;color:var(--ink)}
+  .pack-monthly{margin:.2rem 0 0;font-weight:600}
+  .pack .sum{font-size:1rem;margin-top:1rem}
+  .pack-incl{margin:.8rem 0 0;padding-left:1.1rem;color:var(--ink-soft)}
+  .pack-incl li{margin-bottom:.3rem}
+  .pack-notes{margin:2rem 0 0;padding-left:1.1rem;max-width:62ch;color:var(--ink-soft)}
+  .pack-notes li{margin-bottom:.3rem}
+  .pack-offer{margin:1.4rem 0 0;font-weight:600}
+  .pack-offer a{color:var(--cobalt)}
   @media (max-width:860px){.founding-inner,.faq-wrap{grid-template-columns:1fr}}
-  @media (max-width:860px){.steps{grid-template-columns:1fr 1fr}.incl{columns:1}}
+  @media (max-width:860px){.steps{grid-template-columns:1fr 1fr}.incl{columns:1}.packs{grid-template-columns:1fr}}
   @media (max-width:520px){.steps{grid-template-columns:1fr}.item-head{grid-template-columns:1fr}.dots{display:none}}
 </style>

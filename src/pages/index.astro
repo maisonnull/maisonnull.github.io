@@ -8,7 +8,7 @@ import { studio } from '../config';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
-const MFW = samples['maison-francis-kurkdjian'].hero.w, MFH = samples['maison-francis-kurkdjian'].hero.h;
+const BT = samples['born-to-route'].screens.find((x) => x.src === 'bt-landing')!;
 const SLW = samples['song-lang-garden'].phone.w, SLH = samples['song-lang-garden'].phone.h;
 
 const services = [
@@ -74,16 +74,16 @@ const steps = [
     <div class="wrap">
       <div class="track" data-track>
       <div class="stage">
-        <Device kind="browser" class="st-main" src="mf-home" w={MFW} h={MFH} mode="scroll" eager
-          alt="Maison Francis Kurkdjian concept: the red Baccarat Rouge 540 Extrait bottle beside its name in a large serif." />
+        <Device kind="browser" class="st-main" src={BT.src} w={BT.w} h={BT.h} mode="scroll" eager
+          alt="Born to Route: a sustainable aviation fuel network drawn over a night map of Kalimantan, beside its delivered cost per tonne." />
         <Device kind="phone" class="st-phone" src="sl-m-home" w={SLW} h={SLH} mode="scroll" eager top="#24452F"
           alt="Song Lang Garden concept on a phone: a full-bleed photo of the nursery under the headline A Katong nursery for every kind of space." />
       </div>
       </div>
       <div class="st-caps">
-        <p><a href={`${base}/work/maison-francis-kurkdjian/`}>Maison Francis Kurkdjian</a>, a perfume boutique concept</p>
+        <p><a href={`${base}/work/born-to-route/`}>Born to Route</a>, a fuel supply chain planner</p>
         <p><a href={`${base}/work/song-lang-garden/`}>Song Lang Garden</a>, a plant nursery concept</p>
-        <p class="st-note">Unsolicited redesigns of real brands, made by the studio. Not affiliated with or endorsed by them.</p>
+        <p class="st-note">Song Lang Garden is an unsolicited redesign of a real brand, made by the studio. Not affiliated with or endorsed by it.</p>
       </div>
     </div>
   </section>
@@ -92,7 +92,7 @@ const steps = [
   <section class="samples" id="samples">
     <div class="wrap s-head">
       <h2>Selected samples</h2>
-      <p>Three unsolicited redesigns of real Singapore favourites, designed and built in the house to show what the studio can do. None is client work. Hover over a screen, or tab to it, to scroll through the whole page.</p>
+      <p>A planning tool built by the studio, and two unsolicited redesigns of real Singapore favourites, all designed and built in the house to show what the studio can do. None is client work. Hover over a screen, or tab to it, to scroll through the whole page.</p>
     </div>
 
     {work.map((p) => {
@@ -108,13 +108,13 @@ const steps = [
                 <dt>Designed for</dt><dd>{p.data.sector}</dd>
               </dl>
               <a class="textlink" href={`${base}/work/${p.id}/`}>Read the case study</a>
-              {p.data.live && <a class="textlink" href={p.data.live} target="_blank" rel="noopener">Open the live concept</a>}
+              {p.data.live && <a class="textlink" href={p.data.live} target="_blank" rel="noopener">{p.data.brand ? 'Open the live concept' : 'Open the live app'}</a>}
             </div>
           </div>
           <div class="wrap">
             <div class="room room-split">
-              <Device kind="browser" src={s.hero.src} w={s.hero.w} h={s.hero.h} mode="hover" alt={`${p.data.title} concept: ${s.hero.caption}`} />
-              <Device kind="phone" src={s.phone.src} w={s.phone.w} h={s.phone.h} mode="hover" top={s.top} alt={`${p.data.title} concept on a phone: ${s.phone.caption}`} />
+              <Device kind="browser" src={s.hero.src} w={s.hero.w} h={s.hero.h} mode="hover" alt={`${p.data.title}${p.data.brand ? ' concept' : ''}: ${s.hero.caption}`} />
+              <Device kind="phone" src={s.phone.src} w={s.phone.w} h={s.phone.h} mode="hover" top={s.top} alt={`${p.data.title}${p.data.brand ? ' concept' : ''} on a phone: ${s.phone.caption}`} />
             </div>
             <div class="paint" aria-label={`${p.data.title} colour palette`}>
               {s.palette.map((c) => (
