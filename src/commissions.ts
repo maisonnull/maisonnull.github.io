@@ -36,11 +36,49 @@ export const commissions = [
       'Usage tracking and a launch checklist',
     ],
   },
+  {
+    name: 'Restaurant ordering',
+    price: 'from S$3,800 + S$129 a month',
+    time: 'Three to four weeks',
+    summary: 'A landing page, online ordering and table QR ordering, with payments straight to your own account and no commission on orders.',
+    includes: [
+      'Pickup and delivery orders online, dine-in orders by table QR code',
+      'PayNow and cards through your own HitPay or Stripe account',
+      'A menu you edit yourself, with a kitchen screen for new orders',
+      'An owner dashboard: sales by hour, item, channel and outlet, and repeat customers',
+    ],
+  },
+  {
+    name: 'Brand identity',
+    price: 'from S$3,800',
+    time: 'Three to four weeks',
+    summary: 'A name in type, a mark, colour and a voice, set down so anyone can use them consistently.',
+    includes: [
+      'Logo and wordmark, with versions for small and large sizes',
+      'Colour, typefaces and image direction',
+      'A short brand guide your team can follow',
+      'Starter templates: social posts, slides and a business card',
+    ],
+  },
+  {
+    name: 'Event design',
+    price: 'from S$2,400',
+    time: 'About two weeks',
+    summary: 'One look for a launch, conference or dinner, carried from the invitation to the stage.',
+    includes: [
+      'A key visual and the system around it',
+      'Invitations, email and a set of social posts',
+      'Print-ready signage, backdrop, banners and name badges',
+      'A slide template for speakers',
+    ],
+  },
 ];
 
 export const addOns = [
   { name: 'Monthly care', price: 'S$150 a month', summary: 'Small edits, updates and uptime checks.' },
   { name: 'Copy edit', price: 'S$350', summary: 'Clearer, sharper words for your pages.' },
+  { name: 'Contract design', price: 'from S$1,000 a day', summary: 'Brand, events or digital design alongside your in-house team, by the day or week.' },
+  { name: 'Ordering, multiple outlets', price: 'S$199 a month per outlet', summary: 'Table QR ordering and the full dashboard for each extra outlet. Groups of three or more are quoted.' },
 ];
 
 // Founding commissions: a launch offer for the first few clients, in exchange for
@@ -65,7 +103,7 @@ export const included = [
 export const faq = [
   {
     q: 'How long does it take?',
-    a: 'A landing page takes about a week, a full site two to three weeks, and an app four weeks or more. The exact dates go in the written scope before anything starts.',
+    a: 'A landing page takes about a week, event design about two weeks, a full site two to three weeks, and an app, ordering system or brand identity four weeks or more. The exact dates go in the written scope before anything starts.',
   },
   {
     q: 'Do I own the site?',
@@ -82,6 +120,18 @@ export const faq = [
   {
     q: 'What do you need from me?',
     a: 'Your words, your logo if you have one, any photos, and someone who can answer questions within a day or two. If the words are the hard part, the Copy edit add-on helps.',
+  },
+  {
+    q: 'Do you take a cut of restaurant orders?',
+    a: 'No. Payments go straight from your customers into your own HitPay or Stripe account, and you pay only their card and PayNow fees. The studio charges a fixed setup fee and a fixed monthly fee, never a commission.',
+  },
+  {
+    q: 'Do you design for print and events, not just screens?',
+    a: 'Yes. Brand identities and event designs come with print-ready files for signage, backdrops, banners and invitations, and the studio can work with your printer or venue.',
+  },
+  {
+    q: 'Can you work inside our team on a contract?',
+    a: 'Yes. Contract design is booked by the day or week for brand, event or digital work, alongside your own designers and marketers.',
   },
   {
     q: 'How does payment work?',
