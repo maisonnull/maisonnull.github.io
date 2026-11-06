@@ -1,5 +1,5 @@
 // Design samples: the real screens, palettes and typefaces of each piece.
-// Born to Route is a planning tool built by the studio; the other two are unsolicited redesign concepts. None is client work.
+// Taste Suite, Glowline and Born to Route are built by the studio; Supergreen and Song Lang Garden are unsolicited redesign concepts. None is client work.
 // Images live in /public/samples as WebP. w/h are their pixel sizes.
 export type Screen = { src: string; w: number; h: number; kind: 'browser' | 'phone'; caption: string };
 export type Swatch = { name: string; hex: string; role: string; dark?: boolean };
@@ -16,6 +16,63 @@ export const samples: Record<string, {
   faces: Face[];
   build: string[];       // back of house: how it is made, kept short
 }> = {
+  'taste-suite': {
+    tint: '#1C1C1C',
+    top: '#0E0E0E',
+    fonts: 'family=Archivo:wdth,wght@62..125,400..900&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;600',
+    hero: { src: 'ts-home', w: 2000, h: 8460, kind: 'browser', caption: "The landing: your feed is your portfolio, two sample files read end to end, and a directory of designers." },
+    phone: { src: 'ts-m-home', w: 780, h: 10000, kind: 'phone', caption: "The same landing on a phone, with the sample files stacked as cards." },
+    screens: [
+      { src: 'ts-profile', w: 2000, h: 4874, kind: 'browser', caption: "A designer's profile: who they are, how they design, their signature moves, and when their taste is wrong for you." },
+      { src: 'ts-m-profile', w: 780, h: 10000, kind: 'phone', caption: "A second profile on a phone." },
+    ],
+    palette: [
+      { name: "Black", hex: '#0E0E0E', role: "Page background", dark: true },
+      { name: "Paper", hex: '#F3F0E7', role: "Text and hard edges" },
+      { name: "Lime", hex: '#C8FF00', role: "The one action, and the big numbers" },
+      { name: "Flare", hex: '#FF5B1F', role: "Calls to action and tags", dark: true },
+      { name: "Pink", hex: '#FF3EA5', role: "Stripes and tags", dark: true },
+      { name: "Violet", hex: '#8F7BFF', role: "A fourth tag colour", dark: true },
+    ],
+    faces: [
+      { name: "Archivo", role: "Headlines, set wide and black", css: "'Archivo', 'Arial Black', sans-serif", sample: "YOUR FEED IS YOUR PORTFOLIO.", size: '2.2rem' },
+      { name: "IBM Plex Mono", role: "Labels, handles and section numbers", css: "'IBM Plex Mono', ui-monospace, monospace", sample: "[ 01 · SAMPLES ]  @handle · 323 design posts", size: '1.05rem' },
+      { name: "Inter", role: "Profiles and body text", css: "'Inter', system-ui, sans-serif", sample: "Every number in the file can be traced to a post.", size: '1.2rem' },
+    ],
+    build: [
+      "Plain HTML, CSS and JavaScript with no build step, deployed as a static site to Cloudflare Pages.",
+      "Every profile lives in one data file and is checked against a schema before it renders.",
+      "A dark and a light theme share the same markup, switched by one control.",
+    ],
+  },
+  'glowline': {
+    tint: '#E7F2EC',
+    top: '#FFFFFF',
+    fonts: 'family=Plus+Jakarta+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;500',
+    hero: { src: 'gl-home', w: 2000, h: 8061, kind: 'browser', caption: "The landing: is your skincare actually working? Then why one-day skin grades lie, and how a bottle is judged." },
+    phone: { src: 'gl-m-home', w: 780, h: 10000, kind: 'phone', caption: "The landing on a phone, where most check-ins happen." },
+    screens: [
+      { src: 'gl-insights', w: 2000, h: 7775, kind: 'browser', caption: "The insights board after six weeks: a verdict, the trend against your own noise floor, adherence and cost per result." },
+      { src: 'gl-m-insights', w: 780, h: 10000, kind: 'phone', caption: "The insights board on a phone." },
+    ],
+    palette: [
+      { name: "White", hex: '#FFFFFF', role: "Page background" },
+      { name: "Mist", hex: '#F3F4F6', role: "Panels and pills" },
+      { name: "Ink", hex: '#141417', role: "Text and buttons", dark: true },
+      { name: "Evergreen", hex: '#0D6847', role: "Keep going: real improvement", dark: true },
+      { name: "Mint", hex: '#E7F7F0', role: "Behind good news" },
+      { name: "Amber", hex: '#8F4F0E', role: "Plateaus and warnings", dark: true },
+    ],
+    faces: [
+      { name: "Plus Jakarta Sans", role: "Headlines and everything a person reads", css: "'Plus Jakarta Sans', system-ui, sans-serif", sample: "Is your skincare actually working?", size: '2.3rem' },
+      { name: "IBM Plex Mono", role: "Scores, dates and measurement labels", css: "'IBM Plex Mono', ui-monospace, monospace", sample: "SCAN 12 OF 12 · +10.4 pts vs Day 1", size: '1.05rem' },
+    ],
+    build: [
+      "A Node and TypeScript server with a small web front end, built for the YouCam API Skin AI hackathon.",
+      "Skin scores come from YouCam's AI Skin Analysis; the trend model, noise floor and adherence guard are Glowline's own.",
+      "A fixture mode runs the whole product on local data, so it can be demonstrated without spending a single API unit.",
+    ],
+  },
   'born-to-route': {
     tint: '#DDE3E8',
     top: '#0B1422',

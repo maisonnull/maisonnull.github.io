@@ -5,7 +5,7 @@ sector: Planners of a sustainable aviation fuel supply chain in Kalimantan, buil
 live: https://saf-kalimantan-prsbklhdba-as.a.run.app
 summary: A planner that finds the cheapest way to turn farm biomass into jet fuel across Kalimantan, and shows every farm, depot, refinery and route behind the number.
 decision: Put the map and the money on the same screen, so every cost can be traced to a route.
-order: 1
+order: 3
 ---
 
 ## The brief

@@ -9,8 +9,7 @@ import { practices, collective } from '../commissions';
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 const work = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
-const BT = samples['born-to-route'].screens.find((x) => x.src === 'bt-landing')!;
-const SLW = samples['song-lang-garden'].phone.w, SLH = samples['song-lang-garden'].phone.h;
+const TS = samples['taste-suite'].hero, GL = samples['glowline'].phone;
 
 const backOfHouse = [
   { name: 'Built by the same hands', text: 'Nothing gets lost between the mockup and the live site, because the person who designed it builds it.' },
@@ -42,16 +41,15 @@ const steps = [
     <div class="wrap">
       <div class="track" data-track>
       <div class="stage">
-        <Device kind="browser" class="st-main" src={BT.src} w={BT.w} h={BT.h} mode="scroll" eager
-          alt="Born to Route: a sustainable aviation fuel network drawn over a night map of Kalimantan, beside its delivered cost per tonne." />
-        <Device kind="phone" class="st-phone" src="sl-m-home" w={SLW} h={SLH} mode="scroll" eager top="#24452F"
-          alt="Song Lang Garden concept on a phone: a full-bleed photo of the nursery under the headline A Katong nursery for every kind of space." />
+        <Device kind="browser" class="st-main" src={TS.src} w={TS.w} h={TS.h} mode="scroll" eager
+          alt="Taste Suite: a black and lime landing page headed Your feed is your portfolio, with two designers' taste files below." />
+        <Device kind="phone" class="st-phone" src={GL.src} w={GL.w} h={GL.h} mode="scroll" eager top={samples['glowline'].top}
+          alt="Glowline on a phone: a skincare product's verdict from six weeks of skin check-ins." />
       </div>
       </div>
       <div class="st-caps">
-        <p><a href={`${base}/work/born-to-route/`}>Born to Route</a>, a fuel supply chain planner</p>
-        <p><a href={`${base}/work/song-lang-garden/`}>Song Lang Garden</a>, a plant nursery concept</p>
-        <p class="st-note">Song Lang Garden is an unsolicited redesign of a real brand, made by the studio. Not affiliated with or endorsed by it.</p>
+        <p><a href={`${base}/work/taste-suite/`}>Taste Suite</a>, the LinkedIn for designers</p>
+        <p><a href={`${base}/work/glowline/`}>Glowline</a>, a skincare results tracker</p>
       </div>
     </div>
   </section>
@@ -60,7 +58,7 @@ const steps = [
   <section class="samples" id="samples">
     <div class="wrap s-head">
       <h2>Selected samples</h2>
-      <p>A planning tool built by the studio, and two unsolicited redesigns of real Singapore favourites, all designed and built in the house to show what the studio can do. None is client work. Hover over a screen, or tab to it, to scroll through the whole page.</p>
+      <p>Three products built by the studio, and two unsolicited redesigns of real Singapore favourites, all designed and built in the house. None is client work. Hover over a screen, or tab to it, to scroll through the whole page.</p>
     </div>
 
     {work.map((p) => {

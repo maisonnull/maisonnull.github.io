@@ -6,7 +6,7 @@ brand: Supergreen
 live: https://mn-supergreen.pages.dev
 summary: Ordering for a busy salad chain, rebuilt around the one thing people do most at lunch, which is building a bowl quickly and knowing what is in it.
 decision: Show the bowl fill up as you build it.
-order: 2
+order: 4
 ---
 
 ## The brief

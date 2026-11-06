@@ -6,7 +6,7 @@ brand: Song Lang Garden
 live: https://mn-songlang.pages.dev
 summary: A first proper website for a neighbourhood nursery that, until now, could only be found on Facebook, built from photographs of the nursery itself.
 decision: Show the real nursery, not a stock garden.
-order: 3
+order: 5
 ---
 
 ## The brief

@@ -38,10 +38,10 @@ const phones = [s.phone, ...s.screens.filter((x) => x.kind === 'phone')];
           {d.live && <a class="btn" href={d.live} target="_blank" rel="noopener">Open the live concept</a>}
         </div>
       )}
-      {!d.brand && d.live && (
+      {!d.brand && (
         <div class="concept-note">
           <p>Designed and built by Maison Null. It is not client work.</p>
-          <a class="btn" href={d.live} target="_blank" rel="noopener">Open the live app</a>
+          {d.live && <a class="btn" href={d.live} target="_blank" rel="noopener">Open the live app</a>}
         </div>
       )}
     </div>

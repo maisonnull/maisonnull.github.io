@@ -6,10 +6,12 @@ Live at **[maisonnull.github.io](https://maisonnull.github.io)**.
 
 ## Samples
 
-Born to Route is a planning tool built by the studio. Supergreen and Song Lang Garden are unsolicited redesign concepts, not affiliated with or endorsed by the brands shown.
+Taste Suite, Glowline and Born to Route are built by the studio. Supergreen and Song Lang Garden are unsolicited redesign concepts, not affiliated with or endorsed by the brands shown.
 
 | Sample | Live |
 | --- | --- |
+| Taste Suite, the LinkedIn for designers: taste files built from a designer's archive | [taste-suite.pages.dev](https://taste-suite.pages.dev) |
+| Glowline, a skincare tracker that tells you whether a product is working (built for the YouCam API Skin AI hackathon) | Not deployed |
 | Born to Route, a sustainable aviation fuel supply chain planner for Kalimantan | [saf-kalimantan-prsbklhdba-as.a.run.app](https://saf-kalimantan-prsbklhdba-as.a.run.app) |
 | Supergreen, an ordering site with a build-your-own bowl | [mn-supergreen.pages.dev](https://mn-supergreen.pages.dev) |
 | Song Lang Garden, a first website for a Katong plant nursery | [mn-songlang.pages.dev](https://mn-songlang.pages.dev) |
